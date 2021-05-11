@@ -1,6 +1,6 @@
 # DataWeave Scripts
 
-Here's a compilation of all the (fairly complex) DW scripts I've done.
+Here's a compilation of some of the (fairly complex) DW scripts I've done.
 
 Click on a title to see the function's code, input, and output.
 
