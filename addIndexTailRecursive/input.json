@@ -1,0 +1,79 @@
+{
+    "FlightOptions": [
+        {
+            "Connections": [
+                {
+                    "ReferenceID": 111,
+                    "TaxCode": "ABC",
+                    "EndOfConnection": false
+                },
+                {
+                    "ReferenceID": 222,
+                    "TaxCode": "DEF",
+                    "EndOfConnection": true
+                }
+            ]
+        },
+        {
+            "Connections": [
+                {
+                    "ReferenceID": 333,
+                    "TaxCode": "GHI",
+                    "EndOfConnection": true
+                },
+                {
+                    "ReferenceID": 444,
+                    "TaxCode": "JKL",
+                    "EndOfConnection": true
+                }
+            ]
+        },
+        {
+            "Connections": [
+                {
+                    "ReferenceID": 555,
+                    "TaxCode": "MNO",
+                    "EndOfConnection": false
+                },
+                {
+                    "ReferenceID": 666,
+                    "TaxCode": "PQR",
+                    "EndOfConnection": false
+                },
+                {
+                    "ReferenceID": 777,
+                    "TaxCode": "STU",
+                    "EndOfConnection": false
+                }
+            ]
+        },
+        {
+            "Connections": [
+                {
+                    "ReferenceID": 888,
+                    "TaxCode": "VWX",
+                    "EndOfConnection": false
+                }
+            ]
+        },
+        {
+            "Connections": [
+                {
+                    "ReferenceID": 999,
+                    "TaxCode": "MNO",
+                    "EndOfConnection": false
+                },
+                {
+                    "ReferenceID": 101,
+                    "TaxCode": "PQR",
+                    "EndOfConnection": true
+                },
+                {
+                    "ReferenceID": 102,
+                    "TaxCode": "STU",
+                    "EndOfConnection": false
+                }
+            ]
+        }
+    ]
+}

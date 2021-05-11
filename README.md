@@ -4,12 +4,19 @@ Here's a compilation of all the (fairly complex) DW scripts I've done.
 
 Click on a title to see the function's code, input, and output.
 
+## More Info
+
+The screenshots were generated using the DataWeave Playground. To learn more about this, please read this article: [How to run locally the DataWeave Playground Docker Image](https://www.prostdev.com/post/how-to-run-locally-the-dataweave-playground-docker-image).
+
+For questions, you can contact me here: www.alexandramartinez.world/contact
+
 ## Table of Contents
 
 **Recursive Functions**
 - [getChildren](#getchildren)
 
 **Tail Recursive Functions**
+- [addIndexTailRecursive](#addindextailrecursive)
 - [getDaysBetween](#getdaysbetween)
 - [extractPath](#extractpath)
 
@@ -33,6 +40,20 @@ Example:
 ![getChildren recursive function used from the DataWeave Playground](/images/getChildren.png)
 
 ## Tail Recursive Functions
+
+### [addIndexTailRecursive](/addIndexTailRecursive)
+
+Transforms a JSON payload into a different JSON structure and keeps a count of the indexes accross the whole output array. This function has its own repository that contains additional explanations and links to other resources such as slides and previous versions. To learn more about it please go to this repository: [Reviewing a Complex DataWeave Transformation Use-case](https://github.com/alexandramartinez/reviewing-a-complex-dw-transformation-use-case).
+
+Keywords: `dw::util::Values`, `import`, `update/with`, `fun`, `if/else`, `do`, `var`, `~=`, `+`, `to`, `default`, `map`, `$`, `++`
+
+Input: `Object`
+
+Output: `Array<Object>`
+
+Example:
+
+![addIndexTailRecursive tail recursive function used from the DataWeave Playground](/images/addIndexTailRecursive.png)
 
 ### [getDaysBetween](/getDaysBetween)
 

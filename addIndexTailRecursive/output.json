@@ -1,0 +1,81 @@
+[
+  {
+    "AppliedTaxCode": "DEF",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 1
+      },
+      {
+        "Type": "Connection",
+        "IndexValue": 2
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "GHI",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 3
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "JKL",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 4
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "STU",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 5
+      },
+      {
+        "Type": "Connection",
+        "IndexValue": 6
+      },
+      {
+        "Type": "Connection",
+        "IndexValue": 7
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "VWX",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 8
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "PQR",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 9
+      },
+      {
+        "Type": "Connection",
+        "IndexValue": 10
+      }
+    ]
+  },
+  {
+    "AppliedTaxCode": "STU",
+    "AppliedConnections": [
+      {
+        "Type": "Connection",
+        "IndexValue": 11
+      }
+    ]
+  }
+]
