@@ -4,6 +4,14 @@ Here's a compilation of all the (fairly complex) DW scripts I've done.
 
 Click on a title to see the function's code, input, and output.
 
+## Table of Contents
+
+**Recursive Functions**
+- [getChildren](#getchildren)
+
+**Tail Recursive Functions**
+- [extractPath](#extractpath)
+
 ## Recursive Functions
 
 ### [getChildren](/getChildren)
