@@ -6,10 +6,10 @@ Click on a title to see the function's code, input, and output.
 
 ## Table of Contents
 
-**Recursive Functions**
+Recursive Functions
 - [getChildren](#getchildren)
 
-**Tail Recursive Functions**
+Tail Recursive Functions
 - [extractPath](#extractpath)
 
 ## Recursive Functions
