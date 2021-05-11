@@ -22,6 +22,7 @@ For questions, you can contact me here: www.alexandramartinez.world/contact
 
 **Others**
 - [maskFields](#maskfields)
+- [containsEmptyValues](#containsemptyvalues)
 
 ## Recursive Functions
 
@@ -103,3 +104,17 @@ Output: Same as input
 Example:
 
 ![maskFields and mapLeafValues functions used from the DataWeave Playground](/images/maskFields.png)
+
+### [containsEmptyValues](/containsEmptyValues)
+
+Evaluates if the values from an Array contain at least one empty value (`null`, `[]`, `""`, `{}`). To read more about these 3 different approaches please check out this post: [How to check for empty values in an array in DataWeave | Part 4: Arrays Module](https://www.prostdev.com/post/how-to-check-for-empty-values-in-an-array-in-dataweave-part-4-arrays-module).
+
+Keywords: `dw::core::Arrays`, `import`, `some`, `fun`, `if/else`, `isEmpty`, `$`, `match/case`
+
+Input: `Array`, `Null`
+
+Output: `Boolean`
+
+Example:
+
+![containsEmptyValues functions used from the DataWeave Playground](/images/containsEmptyValues.png)
