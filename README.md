@@ -18,7 +18,7 @@ Click on a title to see the function's code, input, and output.
 
 Creates a tree from a flat array with parent/child relationship.
 
-Keywords: `fun`, `do`, `var`, `as`, `filter`, `~=`, `==`, `if/else`, `isEmpty`, `match/case`, `map`, `$`, `orderBy`
+Keywords: `fun`, `do`, `var`, `as`, `filter`, `~=`, `==`, `if/else`, `isEmpty`, `match/case`, `map`, `$`, `orderBy`, `skipNullOn`
 
 Input: `Array<Object>`
 Output: `Object`
