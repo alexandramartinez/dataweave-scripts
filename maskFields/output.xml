@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<a>
+  <Data name="ssn">****</Data>
+  <Data name="accountType">savings</Data>
+  <Data name="accountNo">****</Data>
+  <ssn>****</ssn>
+  <accountNo>****</accountNo>
+  <account>
+    <person>
+      <ssn>****</ssn>
+      <name>Jane Doe</name>
+    </person>
+    <accountDetails>
+      <accountNo>****</accountNo>
+      <accountType>savings</accountType>
+      <Data name="accountNo">****</Data>
+    </accountDetails>
+  </account>
+</a>
