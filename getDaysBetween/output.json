@@ -1,0 +1,10 @@
+{
+  "Start_Date": "2021-02-01",
+  "End_Date": "2021-02-22",
+  "Count_Working_Days_Including_EndDate": 16,
+  "Count_Working_Days_Excluding_EndDate": 15,
+  "If_Every_Weekend_Was_A_Long_Weekend": 13,
+  "Count_Working_Days_With_Exclusion_Dates": 11,
+  "Count_All_Days_Including_EndDate": 22,
+  "Count_All_Days_Excluding_EndDate": 21
+}
