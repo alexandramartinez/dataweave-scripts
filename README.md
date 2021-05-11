@@ -13,6 +13,9 @@ Click on a title to see the function's code, input, and output.
 - [getDaysBetween](#getdaysbetween)
 - [extractPath](#extractpath)
 
+**Others**
+- [maskFields](#maskfields)
+
 ## Recursive Functions
 
 ### [getChildren](/getChildren)
@@ -22,6 +25,7 @@ Creates a tree from a flat array with parent/child relationship.
 Keywords: `fun`, `do`, `var`, `as`, `filter`, `~=`, `==`, `if/else`, `isEmpty`, `match/case`, `map`, `$`, `orderBy`, `skipNullOn`
 
 Input: `Array<Object>`
+
 Output: `Object`
 
 Example:
@@ -42,6 +46,7 @@ Filters:
 Keywords: `var`, `as`, `fun`, `do`, `contains`, `and`, `not`, `if/else`, `+`, `>`, `==`, `|P|` (Period)
 
 Input: NA
+
 Output: `Number`
 
 Example:
@@ -55,8 +60,25 @@ Extract values from a JSON input using a String representation of a path.
 Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `fun`, `do`, `var`, `scan`, `regex`, `isEmpty`, `if/else`, `match/case`, `as`
 
 Input: `Object`, `Array`
+
 Output: Whichever value was selected from the input and with the path.
 
 Example:
 
 ![extractPath tail recursive function used from the DataWeave Playground](/images/extractPath.png)
+
+## Others
+
+### [maskFields](/maskFields)
+
+Replaces the value with a masked String when the field or the field's attribute contains private information. This function can also be used for different data types, you just need to remove the first condition since it's no longer reading the XML attributes (`fieldsToMask contains value.@name`).
+
+Keywords: `dw::util::Tree`, `import`, `mapLeafValues`, `var`, `fun`, `if/else`, `or`, `contains`, `@`
+
+Input: Can be anything, but in this example is `XML Object`
+
+Output: Same as input
+
+Example:
+
+![maskFields and mapLeafValues functions used from the DataWeave Playground](/images/maskFields.png)
