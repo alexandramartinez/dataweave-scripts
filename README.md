@@ -107,7 +107,7 @@ Example:
 
 ### [extractPathWithFilters](/extractPathWithFilters)
 
-Mixing the previous two functions (extractPath and filterValueByConditions) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
+Mixing the previous two functions (`extractPath` and `filterValueByConditions`) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
 
 *Note*: in order to apply the filters successfully, the given `key` must be from an Array.
 
