@@ -20,6 +20,7 @@ For questions, you can contact me here: www.alexandramartinez.world/contact
 - [getDaysBetween](#getdaysbetween)
 - [extractPath](#extractpath)
 - [filterValueByConditions](#filtervaluebyconditions)
+- [extractPathWithFilters](#extractpathwithfilters)
 
 **Others**
 - [maskFields](#maskfields)
@@ -103,6 +104,22 @@ Output: `Array<Object>`
 Example:
 
 ![filterValueByConditions tail recursive function used from the DataWeave Playground](/images/filterValueByConditions.png)
+
+### [extractPathWithFilters](/extractPathWithFilters)
+
+Mixing the previous two functions (extractPath and filterValueByConditions) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
+
+*Note*: in order to apply the filters successfully, the given `key` must be from an Array.
+
+Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `typeOf`, `~=`, `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `$`, `to`, `scan`, `match/case`, `as`
+
+Input: `Object`, `Array`
+
+Output: Whichever value was selected from the input and with the path.
+
+Example:
+
+![extractPathWithFilters tail recursive function used from the DataWeave Playground](/images/extractPathWithFilters.png)
 
 ## Others
 

@@ -1,0 +1,78 @@
+{
+  "all_comments": [
+    {
+      "name": "Jane Doe",
+      "text": "Good Job, Alex!"
+    },
+    {
+      "name": "Pravallika",
+      "text": "Good Job, Alex!"
+    },
+    {
+      "name": "Jane Doe",
+      "text": "Good Job, Pravallika!"
+    },
+    {
+      "name": "Alex",
+      "text": "Good Job, Pravallika!"
+    },
+    {
+      "name": "Alex",
+      "text": "Good Job, Jane!"
+    }
+  ],
+  "all_posts_duration_3": [
+    {
+      "name": "blogpost1",
+      "duration": 3,
+      "comments": [
+        {
+          "name": "Jane Doe",
+          "text": "Good Job, Alex!"
+        }
+      ]
+    },
+    {
+      "name": "blogpost5",
+      "duration": 3,
+      "comments": [
+        {
+          "name": "Jane Doe",
+          "text": "Good Job, Pravallika!"
+        }
+      ]
+    },
+    {
+      "name": "blogpost7",
+      "duration": 3,
+      "comments": [
+        {
+          "name": "Alex",
+          "text": "Good Job, Jane!"
+        }
+      ]
+    }
+  ],
+  "all_posts_duration_3_and_active_contributor": [
+    {
+      "name": "blogpost1",
+      "duration": 3,
+      "comments": [
+        {
+          "name": "Jane Doe",
+          "text": "Good Job, Alex!"
+        }
+      ]
+    },
+    {
+      "name": "blogpost5",
+      "duration": 3,
+      "comments": [
+        {
+          "name": "Jane Doe",
+          "text": "Good Job, Pravallika!"
+        }
+      ]
+    }
+  ]
+}
