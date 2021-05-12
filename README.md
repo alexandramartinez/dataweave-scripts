@@ -19,6 +19,7 @@ For questions, you can contact me here: www.alexandramartinez.world/contact
 - [addIndexTailRecursive](#addindextailrecursive)
 - [getDaysBetween](#getdaysbetween)
 - [extractPath](#extractpath)
+- [filterValueByConditions](#filtervaluebyconditions)
 
 **Others**
 - [maskFields](#maskfields)
@@ -88,6 +89,20 @@ Output: Whichever value was selected from the input and with the path.
 Example:
 
 ![extractPath tail recursive function used from the DataWeave Playground](/images/extractPath.png)
+
+### [filterValueByConditions](/filterValueByConditions)
+
+Returns the filtered given value using the conditions passed in an Array of Strings.
+
+Keywords: `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `~=`, `to`
+
+Input: `Array<Object>`
+
+Output: `Array<Object>`
+
+Example:
+
+![filterValueByConditions tail recursive function used from the DataWeave Playground](/images/filterValueByConditions.png)
 
 ## Others
 

@@ -1,0 +1,17 @@
+[
+    {
+        "id": 123,
+        "name": "abc",
+        "active": true
+    },
+    {
+        "id": 456,
+        "name": "def",
+        "active": true
+    },
+    {
+        "id": 789,
+        "name": "abc",
+        "active": false
+    }
+]
