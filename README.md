@@ -32,6 +32,8 @@ For questions, you can contact me here: www.alexandramartinez.world/contact
 
 Creates a tree from a flat array with parent/child relationship.
 
+Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
+
 Keywords: `fun`, `do`, `var`, `as`, `filter`, `~=`, `==`, `if/else`, `isEmpty`, `match/case`, `map`, `$`, `orderBy`, `skipNullOn`
 
 Input: `Array<Object>`
@@ -47,6 +49,8 @@ Example:
 ### [addIndexTailRecursive](/addIndexTailRecursive)
 
 Transforms a JSON payload into a different JSON structure and keeps a count of the indexes accross the whole output array. This function has its own repository that contains additional explanations and links to other resources such as slides and previous versions. To learn more about it please go to this repository: [Reviewing a Complex DataWeave Transformation Use-case](https://github.com/alexandramartinez/reviewing-a-complex-dw-transformation-use-case).
+
+Video: [DataWeave Scripts Repo: addIndexTailRecursive tail recursive function | #Codetober 2021 Day 10](https://youtu.be/7LNsn_Mu_Fw)
 
 Keywords: `dw::util::Values`, `import`, `update/with`, `fun`, `if/else`, `do`, `var`, `~=`, `+`, `to`, `default`, `map`, `$`, `++`
 
@@ -67,6 +71,8 @@ Filters:
 - `includingDaysOfWeek` - Array of Numbers to include just certain days of the week in count. Default is to count all days of the week (1-7).
 - `excludingDates` - Array of Dates to include certain dates that should not be counted. Default is empty.
 
+Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codetober 2021 Day 12](https://youtu.be/QiP6WalvwRM)
+
 Keywords: `var`, `as`, `fun`, `do`, `contains`, `and`, `not`, `if/else`, `+`, `>`, `==`, `|P|` (Period)
 
 Input: NA
@@ -80,6 +86,8 @@ Example:
 ### [extractPath](/extractPath)
 
 Extract values from a JSON input using a String representation of a path.
+
+Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober 2021 Day 13](https://youtu.be/rg9i_xMO4c0)
 
 Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `fun`, `do`, `var`, `scan`, `regex`, `isEmpty`, `if/else`, `match/case`, `as`
 
