@@ -103,6 +103,8 @@ Example:
 
 Returns the filtered given value using the conditions passed in an Array of Strings.
 
+Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function | #Codetober 2021 Day 17](https://youtu.be/aKgplxe8w4I)
+
 Keywords: `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `~=`, `to`
 
 Input: `Array<Object>`
