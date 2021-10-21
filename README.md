@@ -121,6 +121,8 @@ Mixing the previous two functions (`extractPath` and `filterValueByConditions`) 
 
 *Note*: in order to apply the filters successfully, the given `key` must be from an Array.
 
+Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
+
 Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `typeOf`, `~=`, `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `$`, `to`, `scan`, `match/case`, `as`
 
 Input: `Object`, `Array`
