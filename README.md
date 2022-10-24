@@ -6,9 +6,9 @@ Click on a title to see the function's code, input, and output.
 
 ## More Info
 
-The screenshots were generated using the DataWeave Playground. To learn more about this, please read this article: [How to run locally the DataWeave Playground Docker Image](https://www.prostdev.com/post/how-to-run-locally-the-dataweave-playground-docker-image).
+To learn more about DataWeave, please go to DataWeave's official landing page: [dataweave.mulesoft.com](https://dataweave.mulesoft.com/).
 
-For questions, you can contact me here: www.alexandramartinez.world/contact
+For questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
 
 ## Table of Contents
 
@@ -21,6 +21,7 @@ For questions, you can contact me here: www.alexandramartinez.world/contact
 - [extractPath](#extractpath)
 - [filterValueByConditions](#filtervaluebyconditions)
 - [extractPathWithFilters](#extractpathwithfilters)
+- [getDatesArray](#getdatesarray)
 
 **Other Functions**
 - [maskFields](#maskfields)
@@ -882,6 +883,54 @@ Example output
     }
   ]
 }
+```
+
+### [getDatesArray](/getDatesArray)
+
+Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates.
+
+Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
+
+Keywords: `Date`, `var`, `as`, `fun`, `do`, `if`/`else`, `+`, `>`, `==`, `|P|` (Period)
+
+Input: NA
+
+Output: `Array<Date>` or `Array`
+
+Script
+```dataweave
+%dw 2.0
+output application/json
+var date = "2022-10-16" as Date
+var dateFinal = "2022-10-18" as Date
+fun getDatesArray ( 
+    startDate: Date,
+    endDate: Date,
+    datesArray: Array = []
+) = do {
+    var newArray = datesArray + startDate 
+    ---
+    if (startDate > endDate) []
+    else if (startDate == endDate) (
+        newArray 
+    )
+    else getDatesArray (
+        startDate + |P1D|, 
+        endDate, 
+        newArray 
+    )
+}
+---
+getDatesArray(date, dateFinal)
+```
+
+Example output
+```json
+[
+  "2022-10-16",
+  "2022-10-17",
+  "2022-10-18"
+]
 ```
 
 ## Other Functions
