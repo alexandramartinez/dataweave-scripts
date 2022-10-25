@@ -23,6 +23,9 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 - [extractPathWithFilters](#extractpathwithfilters)
 - [getDatesArray](#getdatesarray)
 
+**Head and Tail Constructor**
+- [daysUntil](#daysuntil)
+
 **Other Functions**
 - [maskFields](#maskfields)
 - [containsEmptyValues](#containsemptyvalues)
@@ -887,7 +890,7 @@ Example output
 
 ### [getDatesArray](/getDatesArray)
 
-Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates.
+Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [daysUntil](#daysuntil) for an alternate solution)
 
 Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
 
@@ -922,6 +925,47 @@ fun getDatesArray (
 }
 ---
 getDatesArray(date, dateFinal)
+```
+
+Example output
+```json
+[
+  "2022-10-16",
+  "2022-10-17",
+  "2022-10-18"
+]
+```
+
+## Head and Tail Constructor
+
+### [daysUntil](/daysUntil)
+
+Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [getDatesArray](#getdatesarray) for an alternate solution)
+
+Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
+
+Keywords: `Date`, `var`, `as`, `fun`, `if`/`else`, `+`, `>`, `==`, `~`, `|P|` (Period)
+
+Input: NA
+
+Output: `Array<Date>` or `Array`
+
+Script
+```dataweave
+%dw 2.0
+output application/json
+var date = "2022-10-16" as Date
+var dateFinal = "2022-10-18" as Date
+fun daysUntil ( 
+    startDate: Date,
+    endDate: Date
+): Array<Date> = (
+    if (startDate > endDate) []
+    else if (startDate == endDate) [startDate]
+    else [startDate ~ daysUntil(startDate + |P1D|, endDate)]
+)
+---
+date daysUntil dateFinal
 ```
 
 Example output
