@@ -25,6 +25,7 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 
 **Head and Tail Constructor**
 - [daysUntil](#daysuntil)
+- [countAll](#countall)
 
 **Other Functions**
 - [maskFields](#maskfields)
@@ -40,8 +41,6 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 Creates a tree from a flat array with parent/child relationship.
 
 Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
-
-Keywords: `fun`, `do`, `var`, `as`, `filter`, `~=`, `==`, `if/else`, `isEmpty`, `match/case`, `map`, `$`, `orderBy`, `skipNullOn`
 
 Input: `Array<Object>`
 
@@ -148,8 +147,6 @@ Example output
 Transforms a JSON payload into a different JSON structure and keeps a count of the indexes accross the whole output array. This function has its own repository that contains additional explanations and links to other resources such as slides and previous versions. To learn more about it please go to this repository: [Reviewing a Complex DataWeave Transformation Use-case](https://github.com/alexandramartinez/reviewing-a-complex-dw-transformation-use-case).
 
 Video: [DataWeave Scripts Repo: addIndexTailRecursive tail recursive function | #Codetober 2021 Day 10](https://youtu.be/7LNsn_Mu_Fw)
-
-Keywords: `dw::util::Values`, `import`, `update/with`, `fun`, `if/else`, `do`, `var`, `~=`, `+`, `to`, `default`, `map`, `$`, `++`
 
 Input: `Object`
 
@@ -383,8 +380,6 @@ Filters:
 
 Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codetober 2021 Day 12](https://youtu.be/QiP6WalvwRM)
 
-Keywords: `var`, `as`, `fun`, `do`, `contains`, `and`, `not`, `if/else`, `+`, `>`, `==`, `|P|` (Period)
-
 Input: NA
 
 Output: `Number`
@@ -491,8 +486,6 @@ Extract values from a JSON input using a String representation of a path.
 
 Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober 2021 Day 13](https://youtu.be/rg9i_xMO4c0)
 
-Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `fun`, `do`, `var`, `scan`, `regex`, `isEmpty`, `if/else`, `match/case`, `as`
-
 Input: `Object`, `Array`
 
 Output: Whichever value was selected from the input and with the path.
@@ -551,8 +544,6 @@ Example output
 Returns the filtered given value using the conditions passed in an Array of Strings.
 
 Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function | #Codetober 2021 Day 17](https://youtu.be/aKgplxe8w4I)
-
-Keywords: `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `~=`, `to`
 
 Input: `Array<Object>`
 
@@ -620,8 +611,6 @@ Mixing the previous two functions (`extractPath` and `filterValueByConditions`) 
 *Note*: in order to apply the filters successfully, the given `key` must be from an Array.
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
-
-Keywords: `dw::core::Strings`, `import`, `isNumeric`, `substringAfter`, `typeOf`, `~=`, `fun`, `if/else`, `isEmpty`, `do`, `var`, `splitBy`, `filter`, `$`, `to`, `scan`, `match/case`, `as`
 
 Input: `Object`, `Array`
 
@@ -894,8 +883,6 @@ Outputs an Array of Dates `Array<Date>` containing all the dates between two giv
 
 Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
 
-Keywords: `Date`, `var`, `as`, `fun`, `do`, `if`/`else`, `+`, `>`, `==`, `|P|` (Period)
-
 Input: NA
 
 Output: `Array<Date>` or `Array`
@@ -944,11 +931,9 @@ Outputs an Array of Dates `Array<Date>` containing all the dates between two giv
 
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
 
-Keywords: `Date`, `var`, `as`, `fun`, `if`/`else`, `+`, `>`, `==`, `~`, `|P|` (Period)
-
 Input: NA
 
-Output: `Array<Date>` or `Array`
+Output: `Array<Date>`
 
 Script
 ```dataweave
@@ -977,6 +962,36 @@ Example output
 ]
 ```
 
+### [countAll](/countAll)
+
+Outputs an array of numbers `Array<Number>` containing all the numbers from `1` to the given input.
+
+Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
+
+Input: NA
+
+Output: `Array<Number>`
+
+Script
+```dataweave
+%dw 2.0
+output application/json
+fun countAll(count: Number): Array<Number> =
+    if (count <= 1) [count]
+    else [count ~ countAll(count-1)]
+---
+countAll(3)
+```
+
+Example output
+```json
+[
+    3,
+    2,
+    1
+]
+```
+
 ## Other Functions
 
 ### [maskFields](/maskFields)
@@ -984,8 +999,6 @@ Example output
 Replaces the value with a masked String when the field or the field's attribute contains private information. This function can also be used for different data types, you just need to remove the first condition since it's no longer reading the XML attributes (`fieldsToMask contains value.@name`).
 
 Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](https://youtu.be/NBWLXaMYUB8)
-
-Keywords: `dw::util::Tree`, `import`, `mapLeafValues`, `var`, `fun`, `if/else`, `or`, `contains`, `@`
 
 Input: Can be anything, but in this example is `XML Object`
 
@@ -1065,8 +1078,6 @@ Evaluates if the values from an Array contain at least one empty value (`null`, 
 
 Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 Day 26](https://youtu.be/sP_p78lkNAQ)
 
-Keywords: `dw::core::Arrays`, `import`, `some`, `fun`, `if/else`, `isEmpty`, `$`, `match/case`
-
 Input: `Array`, `Null`
 
 Output: `Boolean`
@@ -1116,8 +1127,6 @@ Example output
 ### [`Array<String>` to `Array<Object>`](/arrayString-to-arrayObject)
 
 Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. **Note:** the solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
-
-Keywords: `dw::core::Arrays`, `import`, `divideBy`, `map`, `$`, `[]`
 
 Input: `Array`, `Array<String>`
 
