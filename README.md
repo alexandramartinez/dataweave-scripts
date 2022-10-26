@@ -986,7 +986,7 @@ Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetob
 
 ## Head and Tail Constructor
 
-This syntax hasn't been documented so far, but in the following examples you can get a better feeling of how it works. It can be used with the Array and Object types.
+This syntax hasn't been documented so far, but in the following examples you can get a better feeling of how it works. It can be used with the `Array` and `Object` types.
 
 The general idea is that you create a function that will essentially be recursive, but since this syntax is a lazy evaluation, you won't receive the Stack Overflow error. Inside the function, specify the head, then use `~` to specify the tail afterwards. Surround this in `[]` for Array or `{}` for Object.
 
