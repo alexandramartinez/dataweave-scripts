@@ -45,12 +45,8 @@ Creates a tree from a flat array with parent/child relationship.
 
 Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
 
-Input: `Array<Object>`
-
-Output: `Object`
-
 <details>
-  <summary>Example input</summary>
+  <summary>Input</summary>
 
   ```json
   [
@@ -88,63 +84,69 @@ Output: `Object`
   ```
 </details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json skipNullOn="everywhere"
+<details>
+  <summary>Script</summary>
 
-fun getChildren(items, parentItem) = do {
-    var parentLevel = parentItem.level as Number
-    var thisLevelItemsFiltered = items filter (
-        ($.level ~= (parentLevel + 1))
-        and ($.parent == parentItem.child)
-    )
-    ---
-    if (isEmpty(thisLevelItemsFiltered)) null
-    else (
-        thisLevelItemsFiltered match {
-            case [] -> null
-            else -> thisLevelItemsFiltered map {
-                name: $.name,
-                children: getChildren(items, $)
-            }
-        }
-    ) 
-}
+  ```dataweave
+  %dw 2.0
+  output application/json skipNullOn="everywhere"
 
-var items = payload orderBy $.level
-var parentItem = items[0]
----
-{
-    parent: parentItem.parent,
-    name: parentItem.name,
-    children: getChildren(items, parentItem)
-}
-```
+  fun getChildren(items, parentItem) = do {
+      var parentLevel = parentItem.level as Number
+      var thisLevelItemsFiltered = items filter (
+          ($.level ~= (parentLevel + 1))
+          and ($.parent == parentItem.child)
+      )
+      ---
+      if (isEmpty(thisLevelItemsFiltered)) null
+      else (
+          thisLevelItemsFiltered match {
+              case [] -> null
+              else -> thisLevelItemsFiltered map {
+                  name: $.name,
+                  children: getChildren(items, $)
+              }
+          }
+      ) 
+  }
 
-Example output
-```json
-{
-  "parent": "111",
-  "name": "node1",
-  "children": [
-    {
-      "name": "node2",
-      "children": [
-        {
-          "name": "node3"
-        },
-        {
-          "name": "node5"
-        }
-      ]
-    },
-    {
-      "name": "node4"
-    }
-  ]
-}
-```
+  var items = payload orderBy $.level
+  var parentItem = items[0]
+  ---
+  {
+      parent: parentItem.parent,
+      name: parentItem.name,
+      children: getChildren(items, parentItem)
+  }
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  {
+    "parent": "111",
+    "name": "node1",
+    "children": [
+      {
+        "name": "node2",
+        "children": [
+          {
+            "name": "node3"
+          },
+          {
+            "name": "node5"
+          }
+        ]
+      },
+      {
+        "name": "node4"
+      }
+    ]
+  }
+  ```
+</details>
 
 ## Tail Recursive Functions
 
