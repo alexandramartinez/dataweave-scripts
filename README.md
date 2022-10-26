@@ -664,272 +664,277 @@ Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function |
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
 
+<details>
+  <summary>Input</summary>
 
+  ```json
+  {
+      "site": "ProstDev",
+      "contributors": [
+          {
+              "active": true,
+              "id": 123,
+              "name": {
+                  "firstName": "Alexandra",
+                  "lastName": "Martinez"
+              },
+              "posts": [
+                  {
+                      "name": "blogpost1",
+                      "duration": 3,
+                      "comments": [
+                          {
+                              "name": "Jane Doe",
+                              "text": "Good Job, Alex!"
+                          }
+                      ]
+                  },
+                  {
+                      "name": "blogpost2",
+                      "duration": 5
+                  },
+                  {
+                      "name": "blogpost3",
+                      "duration": 2,
+                      "comments": [
+                          {
+                              "name": "Pravallika",
+                              "text": "Good Job, Alex!"
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "active": true,
+              "id": 456,
+              "name": {
+                  "firstName": "Pravallika",
+                  "lastName": "Nagaraja"
+              },
+              "posts": [
+                  {
+                      "name": "blogpost4",
+                      "duration": 2
+                  },
+                  {
+                      "name": "blogpost5",
+                      "duration": 3,
+                      "comments": [
+                          {
+                              "name": "Jane Doe",
+                              "text": "Good Job, Pravallika!"
+                          }
+                      ]
+                  },
+                  {
+                      "name": "blogpost6",
+                      "duration": 7,
+                      "comments": [
+                          {
+                              "name": "Alex",
+                              "text": "Good Job, Pravallika!"
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "active": false,
+              "id": 789,
+              "name": {
+                  "firstName": "Jane",
+                  "lastName": "Doe"
+              },
+              "posts": [
+                  {
+                      "name": "blogpost7",
+                      "duration": 3,
+                      "comments": [
+                          {
+                              "name": "Alex",
+                              "text": "Good Job, Jane!"
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+  }
+  ```
+</details>
 
-Output: Whichever value was selected from the input and with the path.
+<details>
+  <summary>Script</summary>
 
-Example input
-```json
-{
-    "site": "ProstDev",
-    "contributors": [
-        {
-            "active": true,
-            "id": 123,
-            "name": {
-                "firstName": "Alexandra",
-                "lastName": "Martinez"
-            },
-            "posts": [
-                {
-                    "name": "blogpost1",
-                    "duration": 3,
-                    "comments": [
-                        {
-                            "name": "Jane Doe",
-                            "text": "Good Job, Alex!"
-                        }
-                    ]
-                },
-                {
-                    "name": "blogpost2",
-                    "duration": 5
-                },
-                {
-                    "name": "blogpost3",
-                    "duration": 2,
-                    "comments": [
-                        {
-                            "name": "Pravallika",
-                            "text": "Good Job, Alex!"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "active": true,
-            "id": 456,
-            "name": {
-                "firstName": "Pravallika",
-                "lastName": "Nagaraja"
-            },
-            "posts": [
-                {
-                    "name": "blogpost4",
-                    "duration": 2
-                },
-                {
-                    "name": "blogpost5",
-                    "duration": 3,
-                    "comments": [
-                        {
-                            "name": "Jane Doe",
-                            "text": "Good Job, Pravallika!"
-                        }
-                    ]
-                },
-                {
-                    "name": "blogpost6",
-                    "duration": 7,
-                    "comments": [
-                        {
-                            "name": "Alex",
-                            "text": "Good Job, Pravallika!"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "active": false,
-            "id": 789,
-            "name": {
-                "firstName": "Jane",
-                "lastName": "Doe"
-            },
-            "posts": [
-                {
-                    "name": "blogpost7",
-                    "duration": 3,
-                    "comments": [
-                        {
-                            "name": "Alex",
-                            "text": "Good Job, Jane!"
-                        }
-                    ]
-                }
-            ]
-        }
+  ```dataweave
+  %dw 2.0
+  output application/json
+  import isNumeric, substringAfter from dw::core::Strings
+
+  fun isArrayOfArray(value): Boolean = (
+      (typeOf(value) ~= "Array") 
+      and (typeOf(value[0]) ~= "Array")
+  )
+
+  fun filterValueByConditions(value, conditions) = (
+      if (isEmpty(conditions[0])) value
+      else do {
+          var firstConditionArr = conditions[0] splitBy ":"
+          ---
+          filterValueByConditions(
+              value filter ($[firstConditionArr[0]] ~= firstConditionArr[1]),
+              conditions[1 to -1]
+          )
+      }
+  )
+
+  fun extractPathWithFilters(value, path: String, filters: Array = []) = do {
+      var nextItem = (path scan /\w+/)[0][0]
+      ---
+      if (isEmpty(nextItem)) value
+      else do {
+          var isIndex = isNumeric(nextItem)
+          var extractor = isIndex match {
+              case true -> nextItem as Number
+              else -> nextItem
+          }
+          var extractedValue = value[extractor]
+          var newValue = filterValueByConditions(
+              isArrayOfArray(extractedValue) match {
+                  case true -> flatten(extractedValue) // flatten array of arrays
+                  else ->extractedValue
+              },
+              (filters filter ($.key contains nextItem)).condition
+          )
+          ---
+          extractPathWithFilters(
+              newValue,
+              substringAfter(path, nextItem),
+              filters
+          )
+      }
+  }
+  ---
+  {
+      all_comments: extractPathWithFilters(
+          payload,
+          "contributors.posts.comments"
+      ),
+      all_posts_duration_3: extractPathWithFilters(
+          payload,
+          "contributors.posts",
+          [
+              {
+                  "key": "posts",
+                  "condition": "duration:3"
+              }
+          ]
+      ),
+      all_posts_duration_3_and_active_contributor: extractPathWithFilters(
+          payload,
+          "contributors.posts",
+          [
+              {
+                  "key": "posts",
+                  "condition": "duration:3"
+              },
+              {
+                  "key": "contributors",
+                  "condition": "active:true"
+              }
+          ]
+      )
+  }
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  {
+    "all_comments": [
+      {
+        "name": "Jane Doe",
+        "text": "Good Job, Alex!"
+      },
+      {
+        "name": "Pravallika",
+        "text": "Good Job, Alex!"
+      },
+      {
+        "name": "Jane Doe",
+        "text": "Good Job, Pravallika!"
+      },
+      {
+        "name": "Alex",
+        "text": "Good Job, Pravallika!"
+      },
+      {
+        "name": "Alex",
+        "text": "Good Job, Jane!"
+      }
+    ],
+    "all_posts_duration_3": [
+      {
+        "name": "blogpost1",
+        "duration": 3,
+        "comments": [
+          {
+            "name": "Jane Doe",
+            "text": "Good Job, Alex!"
+          }
+        ]
+      },
+      {
+        "name": "blogpost5",
+        "duration": 3,
+        "comments": [
+          {
+            "name": "Jane Doe",
+            "text": "Good Job, Pravallika!"
+          }
+        ]
+      },
+      {
+        "name": "blogpost7",
+        "duration": 3,
+        "comments": [
+          {
+            "name": "Alex",
+            "text": "Good Job, Jane!"
+          }
+        ]
+      }
+    ],
+    "all_posts_duration_3_and_active_contributor": [
+      {
+        "name": "blogpost1",
+        "duration": 3,
+        "comments": [
+          {
+            "name": "Jane Doe",
+            "text": "Good Job, Alex!"
+          }
+        ]
+      },
+      {
+        "name": "blogpost5",
+        "duration": 3,
+        "comments": [
+          {
+            "name": "Jane Doe",
+            "text": "Good Job, Pravallika!"
+          }
+        ]
+      }
     ]
-}
-```
+  }
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-import isNumeric, substringAfter from dw::core::Strings
-
-fun isArrayOfArray(value): Boolean = (
-    (typeOf(value) ~= "Array") 
-    and (typeOf(value[0]) ~= "Array")
-)
-
-fun filterValueByConditions(value, conditions) = (
-    if (isEmpty(conditions[0])) value
-    else do {
-        var firstConditionArr = conditions[0] splitBy ":"
-        ---
-        filterValueByConditions(
-            value filter ($[firstConditionArr[0]] ~= firstConditionArr[1]),
-            conditions[1 to -1]
-        )
-    }
-)
-
-fun extractPathWithFilters(value, path: String, filters: Array = []) = do {
-    var nextItem = (path scan /\w+/)[0][0]
-    ---
-    if (isEmpty(nextItem)) value
-    else do {
-        var isIndex = isNumeric(nextItem)
-        var extractor = isIndex match {
-            case true -> nextItem as Number
-            else -> nextItem
-        }
-        var extractedValue = value[extractor]
-        var newValue = filterValueByConditions(
-            isArrayOfArray(extractedValue) match {
-                case true -> flatten(extractedValue) // flatten array of arrays
-                else ->extractedValue
-            },
-            (filters filter ($.key contains nextItem)).condition
-        )
-        ---
-        extractPathWithFilters(
-            newValue,
-            substringAfter(path, nextItem),
-            filters
-        )
-    }
-}
----
-{
-    all_comments: extractPathWithFilters(
-        payload,
-        "contributors.posts.comments"
-    ),
-    all_posts_duration_3: extractPathWithFilters(
-        payload,
-        "contributors.posts",
-        [
-            {
-                "key": "posts",
-                "condition": "duration:3"
-            }
-        ]
-    ),
-    all_posts_duration_3_and_active_contributor: extractPathWithFilters(
-        payload,
-        "contributors.posts",
-        [
-            {
-                "key": "posts",
-                "condition": "duration:3"
-            },
-            {
-                "key": "contributors",
-                "condition": "active:true"
-            }
-        ]
-    )
-}
-```
-
-Example output
-```json
-{
-  "all_comments": [
-    {
-      "name": "Jane Doe",
-      "text": "Good Job, Alex!"
-    },
-    {
-      "name": "Pravallika",
-      "text": "Good Job, Alex!"
-    },
-    {
-      "name": "Jane Doe",
-      "text": "Good Job, Pravallika!"
-    },
-    {
-      "name": "Alex",
-      "text": "Good Job, Pravallika!"
-    },
-    {
-      "name": "Alex",
-      "text": "Good Job, Jane!"
-    }
-  ],
-  "all_posts_duration_3": [
-    {
-      "name": "blogpost1",
-      "duration": 3,
-      "comments": [
-        {
-          "name": "Jane Doe",
-          "text": "Good Job, Alex!"
-        }
-      ]
-    },
-    {
-      "name": "blogpost5",
-      "duration": 3,
-      "comments": [
-        {
-          "name": "Jane Doe",
-          "text": "Good Job, Pravallika!"
-        }
-      ]
-    },
-    {
-      "name": "blogpost7",
-      "duration": 3,
-      "comments": [
-        {
-          "name": "Alex",
-          "text": "Good Job, Jane!"
-        }
-      ]
-    }
-  ],
-  "all_posts_duration_3_and_active_contributor": [
-    {
-      "name": "blogpost1",
-      "duration": 3,
-      "comments": [
-        {
-          "name": "Jane Doe",
-          "text": "Good Job, Alex!"
-        }
-      ]
-    },
-    {
-      "name": "blogpost5",
-      "duration": 3,
-      "comments": [
-        {
-          "name": "Jane Doe",
-          "text": "Good Job, Pravallika!"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### [getDatesArray](/getDatesArray)
+### getDatesArray
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [daysUntil](#daysuntil) for an alternate solution)
 
@@ -937,49 +942,57 @@ Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetob
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: NA
+<details>
+  <summary>Script</summary>
 
-Output: `Array<Date>` or `Array`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  var date = "2022-10-16" as Date
+  var dateFinal = "2022-10-18" as Date
+  fun getDatesArray ( 
+      startDate: Date,
+      endDate: Date,
+      datesArray: Array = []
+  ) = do {
+      var newArray = datesArray + startDate 
+      ---
+      if (startDate > endDate) []
+      else if (startDate == endDate) (
+          newArray 
+      )
+      else getDatesArray (
+          startDate + |P1D|, 
+          endDate, 
+          newArray 
+      )
+  }
+  ---
+  getDatesArray(date, dateFinal)
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-var date = "2022-10-16" as Date
-var dateFinal = "2022-10-18" as Date
-fun getDatesArray ( 
-    startDate: Date,
-    endDate: Date,
-    datesArray: Array = []
-) = do {
-    var newArray = datesArray + startDate 
-    ---
-    if (startDate > endDate) []
-    else if (startDate == endDate) (
-        newArray 
-    )
-    else getDatesArray (
-        startDate + |P1D|, 
-        endDate, 
-        newArray 
-    )
-}
----
-getDatesArray(date, dateFinal)
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-[
-  "2022-10-16",
-  "2022-10-17",
-  "2022-10-18"
-]
-```
+  ```json
+  [
+    "2022-10-16",
+    "2022-10-17",
+    "2022-10-18"
+  ]
+  ```
+</details>
 
 ## Head and Tail Constructor
 
-### [daysUntil](/daysUntil)
+This syntax hasn't been documented so far, but in the following examples you can get a better feeling of how it works. It can be used with the Array and Object types.
+
+The general idea is that you create a function that will essentially be recursive, but since this syntax is a lazy evaluation, you won't receive the Stack Overflow error. Inside the function, specify the head, then use `~` to specify the tail afterwards. Surround this in `[]` for Array or `{}` for Object.
+
+This is said to be a better syntax than using recursive or tail-recursive functions. So, I recommend you get familiar with it to use it in your Array/Object transformations.
+
+### daysUntil
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [getDatesArray](#getdatesarray) for an alternate solution)
 
@@ -987,38 +1000,40 @@ Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) |
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FdaysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: NA
+<details>
+  <summary>Script</summary>
 
-Output: `Array<Date>`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  var date = "2022-10-16" as Date
+  var dateFinal = "2022-10-18" as Date
+  fun daysUntil ( 
+      startDate: Date,
+      endDate: Date
+  ): Array<Date> = (
+      if (startDate > endDate) []
+      else if (startDate == endDate) [startDate]
+      else [startDate ~ daysUntil(startDate + |P1D|, endDate)]
+  )
+  ---
+  date daysUntil dateFinal
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-var date = "2022-10-16" as Date
-var dateFinal = "2022-10-18" as Date
-fun daysUntil ( 
-    startDate: Date,
-    endDate: Date
-): Array<Date> = (
-    if (startDate > endDate) []
-    else if (startDate == endDate) [startDate]
-    else [startDate ~ daysUntil(startDate + |P1D|, endDate)]
-)
----
-date daysUntil dateFinal
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-[
-  "2022-10-16",
-  "2022-10-17",
-  "2022-10-18"
-]
-```
+  ```json
+  [
+    "2022-10-16",
+    "2022-10-17",
+    "2022-10-18"
+  ]
+  ```
+</details>
 
-### [countAll](/countAll)
+### countAll
 
 Outputs an array of numbers `Array<Number>` containing all the numbers from `1` to the given input.
 
@@ -1026,31 +1041,33 @@ Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) |
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcountAll"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: NA
+<details>
+  <summary>Script</summary>
 
-Output: `Array<Number>`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  fun countAll(count: Number): Array<Number> =
+      if (count <= 1) [count]
+      else [count ~ countAll(count-1)]
+  ---
+  countAll(3)
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-fun countAll(count: Number): Array<Number> =
-    if (count <= 1) [count]
-    else [count ~ countAll(count-1)]
----
-countAll(3)
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-[
-    3,
-    2,
-    1
-]
-```
+  ```json
+  [
+      3,
+      2,
+      1
+  ]
+  ```
+</details>
 
-### [infiniteCountFrom](/infiniteCountFrom)
+### infiniteCountFrom
 
 Creates an infinite array of numbers `Array<Number>` without reaching a stack overflow error, thanks to the head & tail constructor's lazy evaluation. The index/range selector is used to extract a portion of the infinite array to actually see the result.
 
@@ -1058,42 +1075,46 @@ Video: [DataWeave Scripts repo: infiniteCountFrom func (head & tail constructor)
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FinfiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: NA
+<details>
+  <summary>Script</summary>
 
-Output: `Array<Number>`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  fun infiniteCountFrom(startingNumber: Number): Array<Number> =
+      [startingNumber ~ infiniteCountFrom(startingNumber + 1)]
+  ---
+  // remove the [1 to 10] to make it really infinite
+  // warning: it will NEVER stop running
+  // watch the video for more information: https://youtu.be/WDi0g2VtFIg
+  infiniteCountFrom(0)[1 to 10]
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-fun infiniteCountFrom(startingNumber: Number): Array<Number> =
-    [startingNumber ~ infiniteCountFrom(startingNumber + 1)]
----
-// remove the [1 to 10] to make it really infinite
-// warning: it will NEVER stop running
-// watch the video for more information: https://youtu.be/WDi0g2VtFIg
-infiniteCountFrom(0)[1 to 10]
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-[
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10
-]
-```
+  ```json
+  [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+  ]
+  ```
+</details>
 
 ## Other Functions
 
-### [maskFields](/maskFields)
+I wasn't sure where to put these functions, so I just dropped them here 😄
+
+### maskFields
 
 Replaces the value with a masked String when the field or the field's attribute contains private information. This function can also be used for different data types, you just need to remove the first condition since it's no longer reading the XML attributes (`fieldsToMask contains value.@name`).
 
@@ -1101,79 +1122,83 @@ Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](ht
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FmaskFields"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: Can be anything, but in this example is `XML Object`
+<details>
+  <summary>Input</summary>
+  ```xml
+  <?xml version='1.0' encoding='UTF-8'?>
+  <a>
+      <Data name="ssn">123456789</Data>
+      <Data name="accountType">savings</Data>
+      <Data name="accountNo">111222333444</Data>
+      <ssn>123456789</ssn>
+      <accountNo>111222333444</accountNo>
+      <account>
+          <person>
+              <ssn>123456789</ssn>
+              <name>Jane Doe</name>
+          </person>
+          <accountDetails>
+              <accountNo>111222333444</accountNo>
+              <accountType>savings</accountType>
+              <Data name="accountNo">111222333444</Data>
+          </accountDetails>
+      </account>
+  </a>
+  ```
+</details>
 
-Output: Same as input
+<details>
+  <summary>Script</summary>
 
-Example input
-```xml
-<?xml version='1.0' encoding='UTF-8'?>
-<a>
-    <Data name="ssn">123456789</Data>
+  ```dataweave
+  %dw 2.0
+  output application/xml
+  import mapLeafValues from dw::util::Tree
+
+  var maskedValue = "****" // Replace the value with this String
+  var fieldsToMask = ["ssn", "accountNo"] // List of fields that need to be masked
+
+  fun maskFields(data) = (
+      data mapLeafValues ((value, path) -> 
+          if (
+              (fieldsToMask contains value.@name) // If the name of the attribute matches
+              or (fieldsToMask contains path[-1].selector) // If the name of the field matches
+          ) maskedValue // Replace value
+          else value // Leave value as-is
+      )
+  )
+  ---
+  maskFields(payload) 
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```xml
+  <?xml version='1.0' encoding='UTF-8'?>
+  <a>
+    <Data name="ssn">****</Data>
     <Data name="accountType">savings</Data>
-    <Data name="accountNo">111222333444</Data>
-    <ssn>123456789</ssn>
-    <accountNo>111222333444</accountNo>
+    <Data name="accountNo">****</Data>
+    <ssn>****</ssn>
+    <accountNo>****</accountNo>
     <account>
-        <person>
-            <ssn>123456789</ssn>
-            <name>Jane Doe</name>
-        </person>
-        <accountDetails>
-            <accountNo>111222333444</accountNo>
-            <accountType>savings</accountType>
-            <Data name="accountNo">111222333444</Data>
-        </accountDetails>
+      <person>
+        <ssn>****</ssn>
+        <name>Jane Doe</name>
+      </person>
+      <accountDetails>
+        <accountNo>****</accountNo>
+        <accountType>savings</accountType>
+        <Data name="accountNo">****</Data>
+      </accountDetails>
     </account>
-</a>
-```
+  </a>
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/xml
-import mapLeafValues from dw::util::Tree
-
-var maskedValue = "****" // Replace the value with this String
-var fieldsToMask = ["ssn", "accountNo"] // List of fields that need to be masked
-
-fun maskFields(data) = (
-    data mapLeafValues ((value, path) -> 
-        if (
-            (fieldsToMask contains value.@name) // If the name of the attribute matches
-            or (fieldsToMask contains path[-1].selector) // If the name of the field matches
-        ) maskedValue // Replace value
-        else value // Leave value as-is
-    )
-)
----
-maskFields(payload) 
-```
-
-Example output
-```xml
-<?xml version='1.0' encoding='UTF-8'?>
-<a>
-  <Data name="ssn">****</Data>
-  <Data name="accountType">savings</Data>
-  <Data name="accountNo">****</Data>
-  <ssn>****</ssn>
-  <accountNo>****</accountNo>
-  <account>
-    <person>
-      <ssn>****</ssn>
-      <name>Jane Doe</name>
-    </person>
-    <accountDetails>
-      <accountNo>****</accountNo>
-      <accountType>savings</accountType>
-      <Data name="accountNo">****</Data>
-    </accountDetails>
-  </account>
-</a>
-```
-
-### [containsEmptyValues](/containsEmptyValues)
+### containsEmptyValues
 
 Evaluates if the values from an Array contain at least one empty value (`null`, `[]`, `""`, `{}`). To read more about these 3 different approaches please check out this post: [How to check for empty values in an array in DataWeave | Part 4: Arrays Module](https://www.prostdev.com/post/how-to-check-for-empty-values-in-an-array-in-dataweave-part-4-arrays-module).
 
@@ -1181,90 +1206,103 @@ Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 D
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcontainsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: `Array`, `Null`
+<details>
+  <summary>Script</summary>
 
-Output: `Boolean`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  import some from dw::core::Arrays
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-import some from dw::core::Arrays
+  // Arrays module
+  fun containsEmptyValues1(arr) = if (isEmpty(arr)) true 
+      else arr some isEmpty($)
 
-// Arrays module
-fun containsEmptyValues1(arr) = if (isEmpty(arr)) true 
-    else arr some isEmpty($)
+  // Pattern Matching
+  fun containsEmptyValues2(arr) = arr match {
+      case [] -> true
+      case a is Array -> a some isEmpty($)
+      else -> isEmpty(arr)
+  }
 
-// Pattern Matching
-fun containsEmptyValues2(arr) = arr match {
-    case [] -> true
-    case a is Array -> a some isEmpty($)
-    else -> isEmpty(arr)
-}
+  // Function Overloading
+  fun containsEmptyValues3(value: Null) = true 
+  fun containsEmptyValues3(arr: Array) = arr match { 
+      case [] -> true
+      else -> arr some isEmpty($)
+  }
+  ---
+  {
+      fun1: containsEmptyValues1(["1", null]),
+      fun2: containsEmptyValues2(["1", "2"]),
+      fun3: containsEmptyValues3(["1", ""])
+  }
+  ```
+</details>
 
-// Function Overloading
-fun containsEmptyValues3(value: Null) = true 
-fun containsEmptyValues3(arr: Array) = arr match { 
-    case [] -> true
-    else -> arr some isEmpty($)
-}
----
-{
-    fun1: containsEmptyValues1(["1", null]),
-    fun2: containsEmptyValues2(["1", "2"]),
-    fun3: containsEmptyValues3(["1", ""])
-}
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-{
-  "fun1": true,
-  "fun2": false,
-  "fun3": true
-}
-```
+  ```json
+  {
+    "fun1": true,
+    "fun2": false,
+    "fun3": true
+  }
+  ```
+</details>
 
 ## Other Transformations
 
-### [`Array<String>` to `Array<Object>`](/arrayString-to-arrayObject)
+These are not necessarily functions that I created, but I thought they still created some additional value to learn other kinds of transformations.
 
-Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. **Note:** the solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
+### `Array<String>` to `Array<Object>`
+
+Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. 
+
+> **Note**
+>
+> The solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: `Array`, `Array<String>`
+<details>
+  <summary>Input</summary>
 
-Output: `Array`, `Array<Object>`
+  ```json
+  ["key1","value1","key2","value2","key3","value3"]
+  ```
+</details>
 
-Example input
-```json
-["key1","value1","key2","value2","key3","value3"]
-```
+<details>
+  <summary>Script</summary>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-import divideBy from dw::core::Arrays
----
-payload divideBy 2
-map {
-    ($[0]): $[1]
-}
-```
-
-Example output
-```json
-[
-  {
-    "key1": "value1"
-  },
-  {
-    "key2": "value2"
-  },
-  {
-    "key3": "value3"
+  ```dataweave
+  %dw 2.0
+  output application/json
+  import divideBy from dw::core::Arrays
+  ---
+  payload divideBy 2
+  map {
+      ($[0]): $[1]
   }
-]
-```
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  [
+    {
+      "key1": "value1"
+    },
+    {
+      "key2": "value2"
+    },
+    {
+      "key3": "value3"
+    }
+  ]
+  ```
+</details>
