@@ -26,6 +26,7 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 **Head and Tail Constructor**
 - [daysUntil](#daysuntil)
 - [countAll](#countall)
+- [infiniteCountFrom](#infinitecountfrom)
 
 **Other Functions**
 - [maskFields](#maskfields)
@@ -989,6 +990,45 @@ Example output
     3,
     2,
     1
+]
+```
+
+### [infiniteCountFrom](/infiniteCountFrom)
+
+Creates an infinite array of numbers `Array<Number>` without reaching a stack overflow error, thanks to the head & tail constructor's lazy evaluation. The index/range selector is used to extract a portion of the infinite array to actually see the result.
+
+Video: [DataWeave Scripts repo: infiniteCountFrom func (head & tail constructor) | #Codetober 2022 Day 26](https://youtu.be/WDi0g2VtFIg)
+
+Input: NA
+
+Output: `Array<Number>`
+
+Script
+```dataweave
+%dw 2.0
+output application/json
+fun infiniteCountFrom(startingNumber: Number): Array<Number> =
+    [startingNumber ~ infiniteCountFrom(startingNumber + 1)]
+---
+// remove the [1 to 10] to make it really infinite
+// warning: it will NEVER stop running
+// watch the video for more information: https://youtu.be/WDi0g2VtFIg
+infiniteCountFrom(0)[1 to 10]
+```
+
+Example output
+```json
+[
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
 ]
 ```
 
