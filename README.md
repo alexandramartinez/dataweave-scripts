@@ -2,11 +2,18 @@
 
 Here's a compilation of some of the (fairly complex) DW scripts I've done.
 
-Click on a title to see the function's code, input, and output.
+Check out the [Table of Contents](#table-of-contents) to find all the functions listed here. 
+
+In each function's section, you'll find a brief description of what it does, the input/script/output to run the function, and a button to open the example in the DataWeave Playground directly -- without having to copy and paste each example yourself.
 
 ## More Info
 
-To learn more about DataWeave, please go to DataWeave's official landing page: [dataweave.mulesoft.com](https://dataweave.mulesoft.com/).
+To learn more about DataWeave, please go to DataWeave's official landing page: [dataweave.mulesoft.com](https://dataweave.mulesoft.com/). There you will find aditional resources like the link to join the official DataWeave Slack workspace, the DataWeave Playground, the Visual Studio Code extension, the documentation, and so on.
+
+If you want to open an example in Visual Studio Code, you can use the **Export** button located at the top of the DataWeave Playground, extract the `.zip` file, and open the extracted folder in VSCode. Make sure you already installed Java 8, Maven, and the DataWeave extension for VSCode. For more information, please see the resources below.
+
+- Video: [How to export a script from the DataWeave Playground to Visual Studio Code | Short Tutorial](https://youtu.be/_8kCFBdgX5A)
+- Tutorial: [Getting started with the DataWeave extension for Visual Studio Code](https://developer.mulesoft.com/tutorials-and-howtos/dataweave/dataweave-extension-vscode-getting-started/)
 
 For questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
 
