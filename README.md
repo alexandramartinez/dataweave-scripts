@@ -383,6 +383,8 @@ Filters:
 - `includingDaysOfWeek` - Array of Numbers to include just certain days of the week in count. Default is to count all days of the week (1-7).
 - `excludingDates` - Array of Dates to include certain dates that should not be counted. Default is empty.
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codetober 2021 Day 12](https://youtu.be/QiP6WalvwRM)
 
 Input: NA
