@@ -1124,6 +1124,7 @@ Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](ht
 
 <details>
   <summary>Input</summary>
+  
   ```xml
   <?xml version='1.0' encoding='UTF-8'?>
   <a>
