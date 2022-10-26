@@ -399,7 +399,7 @@ Video: [DataWeave Scripts Repo: addIndexTailRecursive tail recursive function | 
   ```
 </details>
 
-### [getDaysBetween](/getDaysBetween)
+### getDaysBetween
 
 Count the number of days between two dates using certain filters to either count some days or keep them out.
 
@@ -412,107 +412,109 @@ Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codeto
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: NA
+<details>
+  <summary>Script</summary>
 
-Output: `Number`
+  ```dataweave
+  %dw 2.0
+  output application/json
+  // example vars
+  var exampleStartDate = "2021-02-01" as Date
+  var exampleEndDate = "2021-02-22" as Date
+  // tail recursive function
+  fun getDaysBetween (
+      startDate: Date, // starting date 
+      endDate: Date, // ending date
+      includeEndDate: Boolean = false, // boolean to include endDate in count
+      includingDaysOfWeek: Array<Number> = [1, 2, 3, 4, 5, 6, 7], // default value is all days of the week (Mon-Sun)
+      excludingDates: Array<Date> = [], // send array with holidays
+      count: Number = 0 // counter for tail recursive function
+  ) = do {
+      var includesDayOfWeek = includingDaysOfWeek contains startDate.dayOfWeek
+      var isExcludedDate = excludingDates contains startDate
+      var isValidDate = includesDayOfWeek and not isExcludedDate
+      var newCount = if (isValidDate) count + 1 else count
+      ---
+      if (startDate > endDate) count
+      else if (startDate == endDate) (
+          if (includeEndDate and isValidDate) count + 1
+          else count
+      )
+      else getDaysBetween (
+          startDate + |P1D|, 
+          endDate,
+          includeEndDate,
+          includingDaysOfWeek,
+          excludingDates,
+          newCount
+      )
+  }
+  ---
+  {
+      Start_Date: exampleStartDate,
+      End_Date: exampleEndDate,
+      Count_Working_Days_Including_EndDate: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate, 
+          true,
+          [1, 2, 3, 4, 5]
+      ),
+      Count_Working_Days_Excluding_EndDate: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate, 
+          false,
+          [1, 2, 3, 4, 5]
+      ),
+      If_Every_Weekend_Was_A_Long_Weekend: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate, 
+          true,
+          [1, 2, 3, 4]
+      ),
+      Count_Working_Days_With_Exclusion_Dates: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate, 
+          true,
+          [1, 2, 3, 4, 5],
+          [
+              "2021-02-15" as Date,
+              "2021-02-16" as Date,
+              "2021-02-17" as Date,
+              "2021-02-18" as Date,
+              "2021-02-19" as Date
+          ]
+      ),
+      Count_All_Days_Including_EndDate: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate, 
+          true
+      ),
+      Count_All_Days_Excluding_EndDate: getDaysBetween(
+          exampleStartDate, 
+          exampleEndDate
+      )
+  }
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-// example vars
-var exampleStartDate = "2021-02-01" as Date
-var exampleEndDate = "2021-02-22" as Date
-// tail recursive function
-fun getDaysBetween (
-    startDate: Date, // starting date 
-    endDate: Date, // ending date
-    includeEndDate: Boolean = false, // boolean to include endDate in count
-    includingDaysOfWeek: Array<Number> = [1, 2, 3, 4, 5, 6, 7], // default value is all days of the week (Mon-Sun)
-    excludingDates: Array<Date> = [], // send array with holidays
-    count: Number = 0 // counter for tail recursive function
-) = do {
-    var includesDayOfWeek = includingDaysOfWeek contains startDate.dayOfWeek
-    var isExcludedDate = excludingDates contains startDate
-    var isValidDate = includesDayOfWeek and not isExcludedDate
-    var newCount = if (isValidDate) count + 1 else count
-    ---
-    if (startDate > endDate) count
-    else if (startDate == endDate) (
-        if (includeEndDate and isValidDate) count + 1
-        else count
-    )
-    else getDaysBetween (
-        startDate + |P1D|, 
-        endDate,
-        includeEndDate,
-        includingDaysOfWeek,
-        excludingDates,
-        newCount
-    )
-}
----
-{
-    Start_Date: exampleStartDate,
-    End_Date: exampleEndDate,
-    Count_Working_Days_Including_EndDate: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate, 
-        true,
-        [1, 2, 3, 4, 5]
-    ),
-    Count_Working_Days_Excluding_EndDate: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate, 
-        false,
-        [1, 2, 3, 4, 5]
-    ),
-    If_Every_Weekend_Was_A_Long_Weekend: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate, 
-        true,
-        [1, 2, 3, 4]
-    ),
-    Count_Working_Days_With_Exclusion_Dates: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate, 
-        true,
-        [1, 2, 3, 4, 5],
-        [
-            "2021-02-15" as Date,
-            "2021-02-16" as Date,
-            "2021-02-17" as Date,
-            "2021-02-18" as Date,
-            "2021-02-19" as Date
-        ]
-    ),
-    Count_All_Days_Including_EndDate: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate, 
-        true
-    ),
-    Count_All_Days_Excluding_EndDate: getDaysBetween(
-        exampleStartDate, 
-        exampleEndDate
-    )
-}
-```
+<details>
+  <summary>Output</summary>
 
-Example output
-```json
-{
-  "Start_Date": "2021-02-01",
-  "End_Date": "2021-02-22",
-  "Count_Working_Days_Including_EndDate": 16,
-  "Count_Working_Days_Excluding_EndDate": 15,
-  "If_Every_Weekend_Was_A_Long_Weekend": 13,
-  "Count_Working_Days_With_Exclusion_Dates": 11,
-  "Count_All_Days_Including_EndDate": 22,
-  "Count_All_Days_Excluding_EndDate": 21
-}
-```
+  ```json
+  {
+    "Start_Date": "2021-02-01",
+    "End_Date": "2021-02-22",
+    "Count_Working_Days_Including_EndDate": 16,
+    "Count_Working_Days_Excluding_EndDate": 15,
+    "If_Every_Weekend_Was_A_Long_Weekend": 13,
+    "Count_Working_Days_With_Exclusion_Dates": 11,
+    "Count_All_Days_Including_EndDate": 22,
+    "Count_All_Days_Excluding_EndDate": 21
+  }
+  ```
+</details>
 
-### [extractPath](/extractPath)
+### extractPath
 
 Extract values from a JSON input using a String representation of a path.
 
@@ -520,60 +522,65 @@ Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPath"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: `Object`, `Array`
+<details>
+  <summary>Input</summary>
 
-Output: Whichever value was selected from the input and with the path.
+  ```json
+  {
+      "object": {
+          "array": [
+              {
+                  "test": "value1"
+              },
+              {
+                  "test": "value2"
+              }
+          ]
+      }
+  }
+  ```
+</details>
 
-Example input
-```json
-{
-    "object": {
-        "array": [
-            {
-                "test": "value1"
-            },
-            {
-                "test": "value2"
-            }
-        ]
-    }
-}
-```
+<details>
+  <summary>Script</summary>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-import isNumeric, substringAfter from dw::core::Strings
+  ```dataweave
+  %dw 2.0
+  output application/json
+  import isNumeric, substringAfter from dw::core::Strings
 
-fun extractPath(value, path: String) = do {
-    var nextItem = (path scan /\w+/)[0][0]
-    ---
-    if (isEmpty(nextItem)) value
-    else do {
-        var isIndex = isNumeric(nextItem)
-        var extractor = isIndex match {
-            case true -> nextItem as Number
-            else -> nextItem
-        }
-        var restOfPath = substringAfter(path, nextItem)
-        ---
-        extractPath(
-            value[extractor],
-            restOfPath
-        )
-    }
-}
----
-extractPath(payload, "object.array[0].test")
-```
+  fun extractPath(value, path: String) = do {
+      var nextItem = (path scan /\w+/)[0][0]
+      ---
+      if (isEmpty(nextItem)) value
+      else do {
+          var isIndex = isNumeric(nextItem)
+          var extractor = isIndex match {
+              case true -> nextItem as Number
+              else -> nextItem
+          }
+          var restOfPath = substringAfter(path, nextItem)
+          ---
+          extractPath(
+              value[extractor],
+              restOfPath
+          )
+      }
+  }
+  ---
+  extractPath(payload, "object.array[0].test")
+  ```
+</details>
 
-Example output
-```json
-"value1"
-```
+<details>
+  <summary>Output</summary>
 
-### [filterValueByConditions](/filterValueByConditions)
+  ```json
+  "value1"
+  ```
+</details>
+
+### filterValueByConditions
 
 Returns the filtered given value using the conditions passed in an Array of Strings.
 
@@ -581,70 +588,76 @@ Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function 
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FfilterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Input: `Array<Object>`
+<details>
+  <summary>Input</summary>
 
-Output: `Array<Object>`
+  ```json
+  [
+      {
+          "id": 123,
+          "name": "abc",
+          "active": true
+      },
+      {
+          "id": 456,
+          "name": "def",
+          "active": true
+      },
+      {
+          "id": 789,
+          "name": "abc",
+          "active": false
+      }
+  ]
+  ```
+</details>
 
-Example input
-```json
-[
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output application/json
+
+  fun filterValueByConditions(value, conditions) = (
+      if (isEmpty(conditions[0])) value
+      else do {
+          var firstConditionArr = conditions[0] splitBy ":"
+          ---
+          filterValueByConditions(
+              value filter ($[firstConditionArr[0]] ~= firstConditionArr[1]),
+              conditions[1 to -1]
+          )
+      }
+  )
+  ---
+  payload filterValueByConditions [
+      "active:true",
+      "name:abc"
+  ]
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  [
     {
-        "id": 123,
-        "name": "abc",
-        "active": true
-    },
-    {
-        "id": 456,
-        "name": "def",
-        "active": true
-    },
-    {
-        "id": 789,
-        "name": "abc",
-        "active": false
+      "id": 123,
+      "name": "abc",
+      "active": true
     }
-]
-```
+  ]
+  ```
+</details>
 
-Script
-```dataweave
-%dw 2.0
-output application/json
-
-fun filterValueByConditions(value, conditions) = (
-    if (isEmpty(conditions[0])) value
-    else do {
-        var firstConditionArr = conditions[0] splitBy ":"
-        ---
-        filterValueByConditions(
-            value filter ($[firstConditionArr[0]] ~= firstConditionArr[1]),
-            conditions[1 to -1]
-        )
-    }
-)
----
-payload filterValueByConditions [
-    "active:true",
-    "name:abc"
-]
-```
-
-Example output
-```json
-[
-  {
-    "id": 123,
-    "name": "abc",
-    "active": true
-  }
-]
-```
-
-### [extractPathWithFilters](/extractPathWithFilters)
+### extractPathWithFilters
 
 Mixing the previous two functions (`extractPath` and `filterValueByConditions`) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
 
-*Note*: in order to apply the filters successfully, the given `key` must be from an Array.
+> **Note**
+> In order to apply the filters successfully, the given `key` must be from an Array.
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
 
