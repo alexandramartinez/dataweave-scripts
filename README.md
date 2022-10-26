@@ -54,7 +54,7 @@ Creates a tree from a flat array with parent/child relationship.
 
 Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetChildren"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FgetChildren"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
@@ -171,7 +171,7 @@ Transforms a JSON payload into a different JSON structure and keeps a count of t
 
 Video: [DataWeave Scripts Repo: addIndexTailRecursive tail recursive function | #Codetober 2021 Day 10](https://youtu.be/7LNsn_Mu_Fw)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FaddIndexTailRecursive"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FaddIndexTailRecursive"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
@@ -410,7 +410,7 @@ Filters:
 
 Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codetober 2021 Day 12](https://youtu.be/QiP6WalvwRM)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FgetDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -520,7 +520,7 @@ Extract values from a JSON input using a String representation of a path.
 
 Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober 2021 Day 13](https://youtu.be/rg9i_xMO4c0)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPath"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FextractPath"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
@@ -586,7 +586,7 @@ Returns the filtered given value using the conditions passed in an Array of Stri
 
 Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function | #Codetober 2021 Day 17](https://youtu.be/aKgplxe8w4I)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FfilterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FfilterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
@@ -662,7 +662,7 @@ Mixing the previous two functions (`extractPath` and `filterValueByConditions`) 
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FextractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
@@ -940,7 +940,7 @@ Outputs an Array of Dates `Array<Date>` containing all the dates between two giv
 
 Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FgetDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -998,7 +998,7 @@ Outputs an Array of Dates `Array<Date>` containing all the dates between two giv
 
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FdaysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FdaysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -1039,7 +1039,7 @@ Outputs an array of numbers `Array<Number>` containing all the numbers from `1` 
 
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcountAll"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FcountAll"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -1073,7 +1073,7 @@ Creates an infinite array of numbers `Array<Number>` without reaching a stack ov
 
 Video: [DataWeave Scripts repo: infiniteCountFrom func (head & tail constructor) | #Codetober 2022 Day 26](https://youtu.be/WDi0g2VtFIg)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FinfiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FinfiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -1120,11 +1120,11 @@ Replaces the value with a masked String when the field or the field's attribute 
 
 Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](https://youtu.be/NBWLXaMYUB8)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FmaskFields"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FmaskFields"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
-  
+
   ```xml
   <?xml version='1.0' encoding='UTF-8'?>
   <a>
@@ -1205,7 +1205,7 @@ Evaluates if the values from an Array contain at least one empty value (`null`, 
 
 Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 Day 26](https://youtu.be/sP_p78lkNAQ)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcontainsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FcontainsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Script</summary>
@@ -1265,7 +1265,7 @@ Transforms an Array of Strings containing key-value pair strings into an Array o
 >
 > The solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
