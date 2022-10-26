@@ -150,234 +150,239 @@ Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021
 
 ## Tail Recursive Functions
 
-### [addIndexTailRecursive](/addIndexTailRecursive)
+### addIndexTailRecursive
 
 Transforms a JSON payload into a different JSON structure and keeps a count of the indexes accross the whole output array. This function has its own repository that contains additional explanations and links to other resources such as slides and previous versions. To learn more about it please go to this repository: [Reviewing a Complex DataWeave Transformation Use-case](https://github.com/alexandramartinez/reviewing-a-complex-dw-transformation-use-case).
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=addIndexTailRecursive"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: addIndexTailRecursive tail recursive function | #Codetober 2021 Day 10](https://youtu.be/7LNsn_Mu_Fw)
 
-Input: `Object`
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FaddIndexTailRecursive"><img width="300" src="/images/dwplayground-button.png"><a>
 
-Output: `Array<Object>`
+<details>
+  <summary>Input</summary>
 
-Example input
-```json
-{
-    "FlightOptions": [
-        {
-            "Connections": [
-                {
-                    "ReferenceID": 111,
-                    "TaxCode": "ABC",
-                    "EndOfConnection": false
-                },
-                {
-                    "ReferenceID": 222,
-                    "TaxCode": "DEF",
-                    "EndOfConnection": true
-                }
-            ]
-        },
-        {
-            "Connections": [
-                {
-                    "ReferenceID": 333,
-                    "TaxCode": "GHI",
-                    "EndOfConnection": true
-                },
-                {
-                    "ReferenceID": 444,
-                    "TaxCode": "JKL",
-                    "EndOfConnection": true
-                }
-            ]
-        },
-        {
-            "Connections": [
-                {
-                    "ReferenceID": 555,
-                    "TaxCode": "MNO",
-                    "EndOfConnection": false
-                },
-                {
-                    "ReferenceID": 666,
-                    "TaxCode": "PQR",
-                    "EndOfConnection": false
-                },
-                {
-                    "ReferenceID": 777,
-                    "TaxCode": "STU",
-                    "EndOfConnection": false
-                }
-            ]
-        },
-        {
-            "Connections": [
-                {
-                    "ReferenceID": 888,
-                    "TaxCode": "VWX",
-                    "EndOfConnection": false
-                }
-            ]
-        },
-        {
-            "Connections": [
-                {
-                    "ReferenceID": 999,
-                    "TaxCode": "MNO",
-                    "EndOfConnection": false
-                },
-                {
-                    "ReferenceID": 101,
-                    "TaxCode": "PQR",
-                    "EndOfConnection": true
-                },
-                {
-                    "ReferenceID": 102,
-                    "TaxCode": "STU",
-                    "EndOfConnection": false
-                }
-            ]
-        }
-    ]
-}
-```
-
-Script
-```dataweave
-%dw 2.0
-output application/json 
-import update from dw::util::Values 
-
-fun addIndexTailRecursive(
-    connectionsArray: Array<Object>, 
-    indexAccumulatorArray: Array = [], 
-    index: Number = 1, 
-    connectionsAccumulatorArray: Array = [] 
-) = (
-    if (isEmpty(connectionsArray)) connectionsAccumulatorArray 
-    else do { 
-        var thisConnection: Object = connectionsArray[0] 
-        var thisConnectionIsEndOfConnection: Boolean = thisConnection.EndOfConnection ~= true 
-        var newIndexAccumulatorArray = if (thisConnectionIsEndOfConnection) [] else indexAccumulatorArray + index 
-        ---
-        addIndexTailRecursive( 
-            connectionsArray[1 to -1] default [],
-            newIndexAccumulatorArray,
-            index + 1, 
-            if (thisConnectionIsEndOfConnection) (
-                connectionsAccumulatorArray + { 
-                        AppliedTaxCode: thisConnection.TaxCode,
-                        AppliedConnections: (indexAccumulatorArray + index) map {
-                            Type: "Connection",
-                            IndexValue: $
-                        }
-                    }
-            )
-            else connectionsAccumulatorArray 
-        )
-    }
-)
----
-addIndexTailRecursive( 
-    payload.FlightOptions.Connections
-    reduce ((flightOption, accumulator = []) -> do { 
-        var lastConnection = { 
-            (flightOption[-1] update "EndOfConnection" with true)
-        }
-        var updatedConnections = (flightOption[0 to -2] default []) + lastConnection
-        ---
-        accumulator ++ updatedConnections 
-    })
-)
-```
-
-Example output
-```json
-[
+  ```json
   {
-    "AppliedTaxCode": "DEF",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 1
-      },
-      {
-        "Type": "Connection",
-        "IndexValue": 2
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "GHI",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 3
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "JKL",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 4
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "STU",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 5
-      },
-      {
-        "Type": "Connection",
-        "IndexValue": 6
-      },
-      {
-        "Type": "Connection",
-        "IndexValue": 7
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "VWX",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 8
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "PQR",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 9
-      },
-      {
-        "Type": "Connection",
-        "IndexValue": 10
-      }
-    ]
-  },
-  {
-    "AppliedTaxCode": "STU",
-    "AppliedConnections": [
-      {
-        "Type": "Connection",
-        "IndexValue": 11
-      }
-    ]
+      "FlightOptions": [
+          {
+              "Connections": [
+                  {
+                      "ReferenceID": 111,
+                      "TaxCode": "ABC",
+                      "EndOfConnection": false
+                  },
+                  {
+                      "ReferenceID": 222,
+                      "TaxCode": "DEF",
+                      "EndOfConnection": true
+                  }
+              ]
+          },
+          {
+              "Connections": [
+                  {
+                      "ReferenceID": 333,
+                      "TaxCode": "GHI",
+                      "EndOfConnection": true
+                  },
+                  {
+                      "ReferenceID": 444,
+                      "TaxCode": "JKL",
+                      "EndOfConnection": true
+                  }
+              ]
+          },
+          {
+              "Connections": [
+                  {
+                      "ReferenceID": 555,
+                      "TaxCode": "MNO",
+                      "EndOfConnection": false
+                  },
+                  {
+                      "ReferenceID": 666,
+                      "TaxCode": "PQR",
+                      "EndOfConnection": false
+                  },
+                  {
+                      "ReferenceID": 777,
+                      "TaxCode": "STU",
+                      "EndOfConnection": false
+                  }
+              ]
+          },
+          {
+              "Connections": [
+                  {
+                      "ReferenceID": 888,
+                      "TaxCode": "VWX",
+                      "EndOfConnection": false
+                  }
+              ]
+          },
+          {
+              "Connections": [
+                  {
+                      "ReferenceID": 999,
+                      "TaxCode": "MNO",
+                      "EndOfConnection": false
+                  },
+                  {
+                      "ReferenceID": 101,
+                      "TaxCode": "PQR",
+                      "EndOfConnection": true
+                  },
+                  {
+                      "ReferenceID": 102,
+                      "TaxCode": "STU",
+                      "EndOfConnection": false
+                  }
+              ]
+          }
+      ]
   }
-]
-```
+  ```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output application/json 
+  import update from dw::util::Values 
+
+  fun addIndexTailRecursive(
+      connectionsArray: Array<Object>, 
+      indexAccumulatorArray: Array = [], 
+      index: Number = 1, 
+      connectionsAccumulatorArray: Array = [] 
+  ) = (
+      if (isEmpty(connectionsArray)) connectionsAccumulatorArray 
+      else do { 
+          var thisConnection: Object = connectionsArray[0] 
+          var thisConnectionIsEndOfConnection: Boolean = thisConnection.EndOfConnection ~= true 
+          var newIndexAccumulatorArray = if (thisConnectionIsEndOfConnection) [] else indexAccumulatorArray + index 
+          ---
+          addIndexTailRecursive( 
+              connectionsArray[1 to -1] default [],
+              newIndexAccumulatorArray,
+              index + 1, 
+              if (thisConnectionIsEndOfConnection) (
+                  connectionsAccumulatorArray + { 
+                          AppliedTaxCode: thisConnection.TaxCode,
+                          AppliedConnections: (indexAccumulatorArray + index) map {
+                              Type: "Connection",
+                              IndexValue: $
+                          }
+                      }
+              )
+              else connectionsAccumulatorArray 
+          )
+      }
+  )
+  ---
+  addIndexTailRecursive( 
+      payload.FlightOptions.Connections
+      reduce ((flightOption, accumulator = []) -> do { 
+          var lastConnection = { 
+              (flightOption[-1] update "EndOfConnection" with true)
+          }
+          var updatedConnections = (flightOption[0 to -2] default []) + lastConnection
+          ---
+          accumulator ++ updatedConnections 
+      })
+  )
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  [
+    {
+      "AppliedTaxCode": "DEF",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 1
+        },
+        {
+          "Type": "Connection",
+          "IndexValue": 2
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "GHI",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 3
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "JKL",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 4
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "STU",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 5
+        },
+        {
+          "Type": "Connection",
+          "IndexValue": 6
+        },
+        {
+          "Type": "Connection",
+          "IndexValue": 7
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "VWX",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 8
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "PQR",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 9
+        },
+        {
+          "Type": "Connection",
+          "IndexValue": 10
+        }
+      ]
+    },
+    {
+      "AppliedTaxCode": "STU",
+      "AppliedConnections": [
+        {
+          "Type": "Connection",
+          "IndexValue": 11
+        }
+      ]
+    }
+  ]
+  ```
+</details>
 
 ### [getDaysBetween](/getDaysBetween)
 
@@ -388,9 +393,9 @@ Filters:
 - `includingDaysOfWeek` - Array of Numbers to include just certain days of the week in count. Default is to count all days of the week (1-7).
 - `excludingDates` - Array of Dates to include certain dates that should not be counted. Default is empty.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: getDaysBetween tail recursive function | #Codetober 2021 Day 12](https://youtu.be/QiP6WalvwRM)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDaysBetween"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: NA
 
@@ -496,9 +501,9 @@ Example output
 
 Extract values from a JSON input using a String representation of a path.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=extractPath"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober 2021 Day 13](https://youtu.be/rg9i_xMO4c0)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPath"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: `Object`, `Array`
 
@@ -557,9 +562,9 @@ Example output
 
 Returns the filtered given value using the conditions passed in an Array of Strings.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=filterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function | #Codetober 2021 Day 17](https://youtu.be/aKgplxe8w4I)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FfilterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: `Array<Object>`
 
@@ -626,9 +631,9 @@ Mixing the previous two functions (`extractPath` and `filterValueByConditions`) 
 
 *Note*: in order to apply the filters successfully, the given `key` must be from an Array.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=extractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FextractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: `Object`, `Array`
 
@@ -899,9 +904,9 @@ Example output
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [daysUntil](#daysuntil) for an alternate solution)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FgetDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: NA
 
@@ -949,9 +954,9 @@ Example output
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [getDatesArray](#getdatesarray) for an alternate solution)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=daysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FdaysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: NA
 
@@ -988,9 +993,9 @@ Example output
 
 Outputs an array of numbers `Array<Number>` containing all the numbers from `1` to the given input.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=countAll"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcountAll"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: NA
 
@@ -1020,9 +1025,9 @@ Example output
 
 Creates an infinite array of numbers `Array<Number>` without reaching a stack overflow error, thanks to the head & tail constructor's lazy evaluation. The index/range selector is used to extract a portion of the infinite array to actually see the result.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=infiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts repo: infiniteCountFrom func (head & tail constructor) | #Codetober 2022 Day 26](https://youtu.be/WDi0g2VtFIg)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FinfiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: NA
 
@@ -1063,9 +1068,9 @@ Example output
 
 Replaces the value with a masked String when the field or the field's attribute contains private information. This function can also be used for different data types, you just need to remove the first condition since it's no longer reading the XML attributes (`fieldsToMask contains value.@name`).
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=maskFields"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](https://youtu.be/NBWLXaMYUB8)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FmaskFields"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: Can be anything, but in this example is `XML Object`
 
@@ -1143,9 +1148,9 @@ Example output
 
 Evaluates if the values from an Array contain at least one empty value (`null`, `[]`, `""`, `{}`). To read more about these 3 different approaches please check out this post: [How to check for empty values in an array in DataWeave | Part 4: Arrays Module](https://www.prostdev.com/post/how-to-check-for-empty-values-in-an-array-in-dataweave-part-4-arrays-module).
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=containsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 Day 26](https://youtu.be/sP_p78lkNAQ)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FcontainsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: `Array`, `Null`
 
@@ -1197,7 +1202,7 @@ Example output
 
 Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. **Note:** the solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=arrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Input: `Array`, `Array<String>`
 
