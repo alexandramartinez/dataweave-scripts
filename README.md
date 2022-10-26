@@ -491,6 +491,8 @@ Example output
 
 Extract values from a JSON input using a String representation of a path.
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=extractPath"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts Repo: extractPath tail recursive function | #Codetober 2021 Day 13](https://youtu.be/rg9i_xMO4c0)
 
 Input: `Object`, `Array`
@@ -616,6 +618,8 @@ Example output
 Mixing the previous two functions (`extractPath` and `filterValueByConditions`) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
 
 *Note*: in order to apply the filters successfully, the given `key` must be from an Array.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=extractPathWithFilters"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
 
@@ -888,6 +892,8 @@ Example output
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [daysUntil](#daysuntil) for an alternate solution)
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getDatesArray"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetober 2022 Day 24](https://youtu.be/BKHgaldKEgs)
 
 Input: NA
@@ -936,6 +942,8 @@ Example output
 
 Outputs an Array of Dates `Array<Date>` containing all the dates between two given dates. (See [getDatesArray](#getdatesarray) for an alternate solution)
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=daysUntil"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
 
 Input: NA
@@ -972,6 +980,8 @@ Example output
 ### [countAll](/countAll)
 
 Outputs an array of numbers `Array<Number>` containing all the numbers from `1` to the given input.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=countAll"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Video: [DataWeave Scripts repo: daysUntil function (head and tail constructor) | #Codetober 2022 Day 25](https://youtu.be/UdDzgpOv2oo)
 
@@ -1045,6 +1055,8 @@ Example output
 ### [maskFields](/maskFields)
 
 Replaces the value with a masked String when the field or the field's attribute contains private information. This function can also be used for different data types, you just need to remove the first condition since it's no longer reading the XML attributes (`fieldsToMask contains value.@name`).
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=maskFields"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Video: [DataWeave Scripts Repo: maskFields function | #Codetober 2021 Day 24](https://youtu.be/NBWLXaMYUB8)
 
@@ -1124,6 +1136,8 @@ Example output
 
 Evaluates if the values from an Array contain at least one empty value (`null`, `[]`, `""`, `{}`). To read more about these 3 different approaches please check out this post: [How to check for empty values in an array in DataWeave | Part 4: Arrays Module](https://www.prostdev.com/post/how-to-check-for-empty-values-in-an-array-in-dataweave-part-4-arrays-module).
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=containsEmptyValues"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 Day 26](https://youtu.be/sP_p78lkNAQ)
 
 Input: `Array`, `Null`
@@ -1176,10 +1190,11 @@ Example output
 
 Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. **Note:** the solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=arrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Input: `Array`, `Array<String>`
 
 Output: `Array`, `Array<Object>`
-
 
 Example input
 ```json
