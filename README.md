@@ -49,10 +49,9 @@ Input: `Array<Object>`
 
 Output: `Object`
 
-Example input
 <details>
   <summary>Example input</summary>
-  
+
   ```json
   [
     {
