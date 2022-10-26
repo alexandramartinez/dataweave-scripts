@@ -37,7 +37,7 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 
 ## Recursive Functions
 
-### [getChildren](/getChildren)
+### getChildren
 
 Creates a tree from a flat array with parent/child relationship.
 
