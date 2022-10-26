@@ -37,6 +37,10 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 
 ## Recursive Functions
 
+I don't personally recommend using recursive functions because they can reach the Stack Overflow error and mess with your code's performance. But there are some cases where it is needed.
+
+To understand recursive functions better, take a look at this video: [What are recursive functions and how to use them in DataWeave | #Codetober 2022 Day 22](https://youtu.be/9ewcIXukbtc)
+
 ### getChildren
 
 Creates a tree from a flat array with parent/child relationship.
