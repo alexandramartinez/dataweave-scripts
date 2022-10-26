@@ -41,9 +41,9 @@ For questions, you can contact me here: [alexmartinez.ca/contact](https://www.al
 
 Creates a tree from a flat array with parent/child relationship.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getChildren"><img width="300" src="/images/dwplayground-button.png"><a>
-
 Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=getChildren"><img width="300" src="/images/dwplayground-button.png"><a>
 
 <details>
   <summary>Input</summary>
