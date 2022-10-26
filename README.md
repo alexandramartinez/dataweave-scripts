@@ -997,7 +997,7 @@ Example output
 
 Creates an infinite array of numbers `Array<Number>` without reaching a stack overflow error, thanks to the head & tail constructor's lazy evaluation. The index/range selector is used to extract a portion of the infinite array to actually see the result.
 
-<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=infiniteCountFrom"><img width="250" src="/images/dwplayground-button.png"><a>
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=infiniteCountFrom"><img width="300" src="/images/dwplayground-button.png"><a>
 
 Video: [DataWeave Scripts repo: infiniteCountFrom func (head & tail constructor) | #Codetober 2022 Day 26](https://youtu.be/WDi0g2VtFIg)
 
