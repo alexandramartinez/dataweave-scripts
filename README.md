@@ -15,7 +15,7 @@ If you want to open an example in Visual Studio Code, you can use the **Export**
 - Video: [How to export a script from the DataWeave Playground to Visual Studio Code | Short Tutorial](https://youtu.be/_8kCFBdgX5A)
 - Tutorial: [Getting started with the DataWeave extension for Visual Studio Code](https://developer.mulesoft.com/tutorials-and-howtos/dataweave/dataweave-extension-vscode-getting-started/)
 
-For questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
+For additional questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
 
 ## Table of Contents
 
@@ -160,6 +160,10 @@ Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021
 </details>
 
 ## Tail Recursive Functions
+
+If you really want to use recursion in DataWeave, I very much recommend using tail-recursive functions instead of the regular recursive functions. These are better performance-wise because they do not reach the Stack Overflow error.
+
+To understand tail-recursive functions better, take a look at this video: [What are TAIL-recursive functions and how to use them in DataWeave | #Codetober 2022 Day 23](https://youtu.be/LKmOEpEVFxw)
 
 ### addIndexTailRecursive
 
