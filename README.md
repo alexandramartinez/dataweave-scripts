@@ -552,6 +552,8 @@ Example output
 
 Returns the filtered given value using the conditions passed in an Array of Strings.
 
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2FDataWeave-scripts&path=filterValueByConditions"><img width="300" src="/images/dwplayground-button.png"><a>
+
 Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function | #Codetober 2021 Day 17](https://youtu.be/aKgplxe8w4I)
 
 Input: `Array<Object>`
