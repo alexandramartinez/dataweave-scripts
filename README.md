@@ -4,7 +4,11 @@ Here's a compilation of some of the (fairly complex) DW scripts I've done.
 
 Check out the [Table of Contents](#table-of-contents) to find all the functions listed here. 
 
-In each function's section, you'll find a brief description of what it does, the input/script/output to run the function, and a button to open the example in the DataWeave Playground directly -- without having to copy and paste each example yourself.
+In each function's section, you'll find a brief description of what it does, the input/script/output to run the function, and a button to open the example in the DataWeave Playground directly -- without having to copy and paste each example yourself. 
+
+> **Note**
+>
+> To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground | #Codetober 2022 Day 27](https://youtu.be/WzfFkgw0xhw).
 
 ## More Info
 
