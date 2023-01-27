@@ -8,7 +8,7 @@ In each function's section, you'll find a brief description of what it does, the
 
 > **Note**
 >
-> To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground | #Codetober 2022 Day 27](https://youtu.be/WzfFkgw0xhw).
+> To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground](https://youtu.be/WzfFkgw0xhw).
 
 ## More Info
 
@@ -17,6 +17,7 @@ To learn more about DataWeave, please go to DataWeave's official landing page: [
 If you want to open an example in Visual Studio Code, you can use the **Export** button located at the top of the DataWeave Playground, extract the `.zip` file, and open the extracted folder in VSCode. Make sure you already installed Java 8, Maven, and the DataWeave extension for VSCode. For more information, please see the resources below.
 
 - Video: [How to export a script from the DataWeave Playground to Visual Studio Code | Short Tutorial](https://youtu.be/_8kCFBdgX5A)
+- Article: [How to move your code from the DataWeave Playground to Visual Studio Code](https://www.prostdev.com/post/how-to-move-your-code-from-the-dataweave-playground-to-visual-studio-code)
 - Tutorial: [Getting started with the DataWeave extension for Visual Studio Code](https://developer.mulesoft.com/tutorials-and-howtos/dataweave/dataweave-extension-vscode-getting-started/)
 
 For additional questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
