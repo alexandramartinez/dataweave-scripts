@@ -1,0 +1,7 @@
+S - Width: 20.00 in, Length: 27.00 in
+M - Width: 22.01 in, Length: 28.00 in
+L - Width: 24.00 in, Length: 29.00 in
+XL - Width: 25.98 in, Length: 30.00 in
+2XL - Width: 28.00 in, Length: 31.00 in
+3XL - Width: 30.00 in, Length: 32.00 in
+4XL - Width: 32.00 in, Length: 32.99 in

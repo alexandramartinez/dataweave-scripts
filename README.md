@@ -43,6 +43,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 **Other Functions**
 - [maskFields](#maskfields)
 - [containsEmptyValues](#containsemptyvalues)
+- [simpleConcat](#simpleconcat)
 
 **Other Transformations**
 - [`Array<String>` to `Array<Object>`](#arraystring-to-arrayobject)
@@ -1255,6 +1256,80 @@ Video: [DataWeave Scripts Repo: containsEmptyValues function | #Codetober 2021 D
     "fun2": false,
     "fun3": true
   }
+  ```
+</details>
+
+### simpleConcat
+
+Creates a simple text output with the concatenation of a text input.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FsimpleConcat"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+  ```txt
+  S
+  M
+  L
+  XL
+  2XL
+  3XL
+  4XL
+
+  Width, in
+  20.00
+  22.01
+  24.00
+  25.98
+  28.00
+  30.00
+  32.00
+
+  Length, in
+  27.00
+  28.00
+  29.00
+  30.00
+  31.00
+  32.00
+  32.99
+  ```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output text/plain
+  var p = payload splitBy "\n\n" map (
+      $ splitBy "\n"
+  )
+  var units = (p[1][0] splitBy ", ")[-1]
+  var sizes = p[0]
+  var name1 = (p[1][0] splitBy ",")[0]
+  var column1 = p[1][1 to -1]
+  var name2 = (p[2][0] splitBy ",")[0]
+  var column2 = p[2][1 to -1]
+  ---
+  sizes map (
+      "$($) - $(name1): $(column1[$$]) $(units), $(name2): $(column2[$$]) $(units)"
+  ) joinBy "\n"
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```txt
+  S - Width: 20.00 in, Length: 27.00 in
+  M - Width: 22.01 in, Length: 28.00 in
+  L - Width: 24.00 in, Length: 29.00 in
+  XL - Width: 25.98 in, Length: 30.00 in
+  2XL - Width: 28.00 in, Length: 31.00 in
+  3XL - Width: 30.00 in, Length: 32.00 in
+  4XL - Width: 32.00 in, Length: 32.99 in
   ```
 </details>
 
