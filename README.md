@@ -47,6 +47,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 **Other Transformations**
 - [`Array<String>` to `Array<Object>`](#arraystring-to-arrayobject)
 - [Clean XML for WordPress publishing](#clean-xml-for-wordpress-publishing)
+- [Clean HTML (text) for WordPress publishing](#clean-html-text-for-wordpress-publishing)
 
 ## Recursive Functions
 
@@ -1466,6 +1467,71 @@ replace ">" with "&gt;"
     &lt;/cloudhubdeployment&gt;
   &lt;/configuration&gt;
 &lt;/plugin&gt;
+```
+
+</details>
+
+### Clean HTML (text) for WordPress publishing
+
+Transforms an input text (ideally, HTML or XML) to a WordPress-friendly text that can be safely published in a blog post (as a script) to avoid issues with the HTML code.
+
+| From | To 
+| - | - 
+| `<` | `&lt;` 
+| `>` | `&gt;`
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2Fclean-html"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+```
+<lightning-button-menu
+alternative-text="Show menu"
+menu-alignment="auto"
+>
+<template for:each={myMenuItems} for:item="menuItem">
+    <lightning-menu-item
+    key={menuItem.id}
+    value={menuItem.value}
+    label={menuItem.label}
+    ></lightning-menu-item>
+</template>
+</lightning-button-menu>
+```
+
+</details>
+
+<details>
+  <summary>Script</summary>
+
+```dataweave
+%dw 2.0
+output text/plain
+---
+payload
+replace "<" with "&lt;"
+replace ">" with "&gt;"
+```
+
+</details>
+
+<details>
+  <summary>Output</summary>
+
+```
+&lt;lightning-button-menu
+alternative-text="Show menu"
+menu-alignment="auto"
+&gt;
+&lt;template for:each={myMenuItems} for:item="menuItem"&gt;
+    &lt;lightning-menu-item
+    key={menuItem.id}
+    value={menuItem.value}
+    label={menuItem.label}
+    &gt;&lt;/lightning-menu-item&gt;
+&lt;/template&gt;
+&lt;/lightning-button-menu&gt;
 ```
 
 </details>

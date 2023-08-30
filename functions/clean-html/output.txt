@@ -1,0 +1,12 @@
+&lt;lightning-button-menu
+alternative-text="Show menu"
+menu-alignment="auto"
+&gt;
+&lt;template for:each={myMenuItems} for:item="menuItem"&gt;
+    &lt;lightning-menu-item
+    key={menuItem.id}
+    value={menuItem.value}
+    label={menuItem.label}
+    &gt;&lt;/lightning-menu-item&gt;
+&lt;/template&gt;
+&lt;/lightning-button-menu&gt;
