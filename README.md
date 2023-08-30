@@ -6,8 +6,7 @@ Check out the [Table of Contents](#table-of-contents) to find all the functions 
 
 In each function's section, you'll find a brief description of what it does, the input/script/output to run the function, and a button to open the example in the DataWeave Playground directly -- without having to copy and paste each example yourself. 
 
-> **Note**
->
+> **Note**\
 > To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground](https://youtu.be/WzfFkgw0xhw).
 
 ## More Info
@@ -47,6 +46,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 
 **Other Transformations**
 - [`Array<String>` to `Array<Object>`](#arraystring-to-arrayobject)
+- [Clean XML for WordPress publishing](#clean-xml-for-wordpress-publishing)
 
 ## Recursive Functions
 
@@ -662,8 +662,7 @@ Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function 
 
 Mixing the previous two functions (`extractPath` and `filterValueByConditions`) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
 
-> **Note**
->
+> **Note**\
 > In order to apply the filters successfully, the given `key` must be from an Array.
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
@@ -1341,8 +1340,7 @@ These are not necessarily functions that I created, but I thought they still cre
 
 Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. 
 
-> **Note**
->
+> **Note**\
 > The solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
@@ -1386,4 +1384,88 @@ Transforms an Array of Strings containing key-value pair strings into an Array o
     }
   ]
   ```
+</details>
+
+### Clean XML for WordPress publishing
+
+Transforms an input XML to a WordPress-friendly text that can be safely published in a blog post (as a script) to avoid issues with the HTML code.
+
+| From | To 
+| - | - 
+| `<` | `&lt;` 
+| `>` | `&gt;`
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2Fclean-xml"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+```xml
+<plugin>
+  <groupid>org.mule.tools.maven</groupid>
+  <artifactid>mule-maven-plugin</artifactid>
+  <version>${mule.maven.plugin.version}</version>
+  <extensions>true</extensions>
+  <configuration>
+    <cloudhubdeployment>
+      <uri>https://anypoint.mulesoft.com</uri>
+      <muleversion>4.4.0</muleversion>
+      <applicationname>mulesoft-mfa-cicd</applicationname>
+      <environment>Sandbox</environment>
+      <workertype>MICRO</workertype>
+      <region>us-east-2</region>
+      <workers>1</workers>
+      <objectstorev2>true</objectstorev2>
+      <connectedappclientid>${client.id}</connectedappclientid>
+      <connectedappclientsecret>${client.secret}</connectedappclientsecret>
+      <connectedappgranttype>client_credentials</connectedappgranttype>
+    </cloudhubdeployment>
+  </configuration>
+</plugin>
+```
+
+</details>
+
+<details>
+  <summary>Script</summary>
+
+```dataweave
+%dw 2.0
+output text/plain
+---
+write(payload,"application/xml") 
+replace "<?xml version='1.0' encoding='UTF-8'?>\n" with ""
+replace "<" with "&lt;"
+replace ">" with "&gt;"
+```
+
+</details>
+
+<details>
+  <summary>Output</summary>
+
+```
+&lt;plugin&gt;
+  &lt;groupid&gt;org.mule.tools.maven&lt;/groupid&gt;
+  &lt;artifactid&gt;mule-maven-plugin&lt;/artifactid&gt;
+  &lt;version&gt;${mule.maven.plugin.version}&lt;/version&gt;
+  &lt;extensions&gt;true&lt;/extensions&gt;
+  &lt;configuration&gt;
+    &lt;cloudhubdeployment&gt;
+      &lt;uri&gt;https://anypoint.mulesoft.com&lt;/uri&gt;
+      &lt;muleversion&gt;4.4.0&lt;/muleversion&gt;
+      &lt;applicationname&gt;mulesoft-mfa-cicd&lt;/applicationname&gt;
+      &lt;environment&gt;Sandbox&lt;/environment&gt;
+      &lt;workertype&gt;MICRO&lt;/workertype&gt;
+      &lt;region&gt;us-east-2&lt;/region&gt;
+      &lt;workers&gt;1&lt;/workers&gt;
+      &lt;objectstorev2&gt;true&lt;/objectstorev2&gt;
+      &lt;connectedappclientid&gt;${client.id}&lt;/connectedappclientid&gt;
+      &lt;connectedappclientsecret&gt;${client.secret}&lt;/connectedappclientsecret&gt;
+      &lt;connectedappgranttype&gt;client_credentials&lt;/connectedappgranttype&gt;
+    &lt;/cloudhubdeployment&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+```
+
 </details>

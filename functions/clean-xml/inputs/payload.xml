@@ -1,0 +1,21 @@
+<plugin>
+  <groupid>org.mule.tools.maven</groupid>
+  <artifactid>mule-maven-plugin</artifactid>
+  <version>${mule.maven.plugin.version}</version>
+  <extensions>true</extensions>
+  <configuration>
+    <cloudhubdeployment>
+      <uri>https://anypoint.mulesoft.com</uri>
+      <muleversion>4.4.0</muleversion>
+      <applicationname>mulesoft-mfa-cicd</applicationname>
+      <environment>Sandbox</environment>
+      <workertype>MICRO</workertype>
+      <region>us-east-2</region>
+      <workers>1</workers>
+      <objectstorev2>true</objectstorev2>
+      <connectedappclientid>${client.id}</connectedappclientid>
+      <connectedappclientsecret>${client.secret}</connectedappclientsecret>
+      <connectedappgranttype>client_credentials</connectedappgranttype>
+    </cloudhubdeployment>
+  </configuration>
+</plugin>
