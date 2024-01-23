@@ -1,0 +1,43 @@
+%YAML 1.2
+---
+openapi: 3.0.3
+components:
+  schemas:
+    runner_profiles:
+      type: object
+      properties:
+        maid:
+          type: number
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        created:
+          type: string
+          format: date
+    exercises:
+      type: object
+      properties:
+        runid:
+          type: number
+        datetime:
+          type: string
+          format: date-time
+        km_run:
+          type: number
+        calories_burned:
+          type: number
+        duration_minutes:
+          type: number
+        maid:
+          type: number
+        type:
+          type: string

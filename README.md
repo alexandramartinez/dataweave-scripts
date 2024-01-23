@@ -6,7 +6,7 @@ Check out the [Table of Contents](#table-of-contents) to find all the functions 
 
 In each function's section, you'll find a brief description of what it does, the input/script/output to run the function, and a button to open the example in the DataWeave Playground directly -- without having to copy and paste each example yourself. 
 
-> **Note**\
+> [!NOTE]
 > To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground](https://youtu.be/WzfFkgw0xhw).
 
 ## More Info
@@ -48,6 +48,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 - [`Array<String>` to `Array<Object>`](#arraystring-to-arrayobject)
 - [Clean XML for WordPress publishing](#clean-xml-for-wordpress-publishing)
 - [Clean HTML (text) for WordPress publishing](#clean-html-text-for-wordpress-publishing)
+- [YAML Objects to OpenAPI Schema](#yaml-objects-to-openapi-schema)
 
 ## Recursive Functions
 
@@ -663,7 +664,7 @@ Video: [DataWeave Scripts Repo: filterValueByConditions tail recursive function 
 
 Mixing the previous two functions (`extractPath` and `filterValueByConditions`) and adding a bit more code to them, this function extracts a specific path and filters the output depending on the given conditions. This also contains an additional function: `isArrayOfArray` to check if a given value is of the type `Array<Array>`.
 
-> **Note**\
+> [!NOTE]
 > In order to apply the filters successfully, the given `key` must be from an Array.
 
 Video: [DataWeave Scripts Repo: extractPathWithFilters tail recursive function | #Codetober 2021 Day 21](https://youtu.be/Tu5nRmRURgQ)
@@ -1341,7 +1342,7 @@ These are not necessarily functions that I created, but I thought they still cre
 
 Transforms an Array of Strings containing key-value pair strings into an Array of Objects with the provided key-value pairs. 
 
-> **Note**\
+> [!NOTE]
 > The solution does not include the handling of other scenarios (i.e., invalid keys, not enough args, nulls, etc.)
 
 <a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FarrayString-to-arrayObject"><img width="300" src="/images/dwplayground-button.png"><a>
@@ -1532,6 +1533,123 @@ menu-alignment="auto"
     &gt;&lt;/lightning-menu-item&gt;
 &lt;/template&gt;
 &lt;/lightning-button-menu&gt;
+```
+
+</details>
+
+### YAML Objects to OpenAPI Schema
+
+Transforms input YAML Objects to an OpenAPI Schema definition. Especially useful for the [Salesforce Ingestion API](https://help.salesforce.com/s/articleView?id=sf.c360_a_ingestion_api_schema_req.htm&type=5).
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FyamlObjects-to-openapiSchema"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+```yaml
+runner_profiles:
+    maid: 4
+    first_name: Alex
+    last_name: Martinez
+    email: alex@sf.com
+    gender: NB
+    city: NF
+    state: ON
+    created: 2017-07-21
+exercises:
+    runid: 1
+    datetime: 2017-07-21T17:32:28Z
+    km_run: 2
+    calories_burned: 5
+    duration_minutes: 6
+    maid: 8
+    type: abc
+```
+
+</details>
+
+<details>
+  <summary>Script</summary>
+
+```dataweave
+%dw 2.0
+output application/yaml skipNullOn="objects"
+import try from dw::Runtime
+fun isDate(value: Any): Boolean = try(() -> value as Date).success
+fun isDateTime(value: Any): Boolean = try(() -> value as DateTime).success
+---
+{
+    openapi: "3.0.3",
+    components: {
+        schemas: payload mapObject ((mainObj, mainObjKey) -> 
+            (mainObjKey): {
+                "type": lower(typeOf(mainObj)),
+                properties: mainObj mapObject ((props, propsKey) -> 
+                    (propsKey): {
+                        "type": lower(typeOf(props)),
+                        format: (props match {
+                            case is Number -> null
+                            case d if isDateTime(d) -> "date-time"
+                            case d if isDate(d) -> "date"
+                            else -> null
+                        })
+                    }
+                )
+            }
+        )
+    }
+}
+```
+
+</details>
+
+<details>
+  <summary>Output</summary>
+
+```yaml
+%YAML 1.2
+---
+openapi: 3.0.3
+components:
+  schemas:
+    runner_profiles:
+      type: object
+      properties:
+        maid:
+          type: number
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        created:
+          type: string
+          format: date
+    exercises:
+      type: object
+      properties:
+        runid:
+          type: number
+        datetime:
+          type: string
+          format: date-time
+        km_run:
+          type: number
+        calories_burned:
+          type: number
+        duration_minutes:
+          type: number
+        maid:
+          type: number
+        type:
+          type: string
 ```
 
 </details>
