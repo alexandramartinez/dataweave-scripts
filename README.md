@@ -33,6 +33,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 - [filterValueByConditions](#filtervaluebyconditions)
 - [extractPathWithFilters](#extractpathwithfilters)
 - [getDatesArray](#getdatesarray)
+- [flattenObject](#flattenobject)
 
 **Head and Tail Constructor**
 - [daysUntil](#daysuntil)
@@ -989,6 +990,136 @@ Video: [DataWeave Scripts repo: getDatesArray tail recursive function | #Codetob
     "2022-10-18"
   ]
   ```
+</details>
+
+### flattenObject
+
+Takes an input object with nested objects and transforms it to a two-level object. Can be used in conjuction with [YAML Objects to OpenAPI Schema](#yaml-objects-to-openapi-schema) for your Data Cloud Ingestion API in Salesforce.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FflattenObject"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+```json
+{
+  "customer1": {
+    "id": 1,
+    "first_name": "Alex",
+    "last_name": "Martinez",
+    "email": "alex@sf.com",
+    "addresses": [
+        {
+            "street": "415 Mission Street",
+            "city": "San Francisco",
+            "state": "CA",
+            "postalCode": "94105",
+            "geo": {
+                "lat": 37.78916,
+                "lng": -122.39521
+            }
+        },
+        {
+            "street": "123",
+            "city": "San Francisco",
+            "state": "CA",
+            "postalCode": "94105",
+            "geo": {
+                "lat": 37.78916,
+                "lng": -122.39521
+            }
+        }
+    ]
+  },
+  "customer2": {
+    "id": 1,
+    "first_name": "Alex",
+    "last_name": "Martinez",
+    "email": "alex@sf.com",
+    "addresses": [
+        {
+            "street": "415 Mission Street",
+            "city": "San Francisco",
+            "state": "CA",
+            "postalCode": "94105",
+            "geo": {
+                "lat": 37.78916,
+                "lng": -122.39521
+            }
+        },
+        {
+            "street": "123",
+            "city": "San Francisco",
+            "state": "CA",
+            "postalCode": "94105",
+            "geo": {
+                "lat": 37.78916,
+                "lng": -122.39521
+            }
+        }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+```dataweave
+%dw 2.0
+output application/json
+fun flattenObject(data:Any, result={}) = (
+    data match {
+        case is Object -> data mapObject ((value, key) ->
+            value match {
+                case is Object -> flattenObject(value, result)
+                else -> flattenObject(value, result ++ {(key):value})
+            }
+        )
+        case is Array -> flattenObject(data[0]) // only first item from array will be taken
+        else -> result
+    }
+)
+---
+//payload must be an object
+payload mapObject ((value, key, index) -> 
+    (key): flattenObject(value)
+)
+```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+```json
+{
+  "customer1": {
+    "id": 1,
+    "first_name": "Alex",
+    "last_name": "Martinez",
+    "email": "alex@sf.com",
+    "street": "415 Mission Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94105",
+    "lat": 37.78916,
+    "lng": -122.39521
+  },
+  "customer2": {
+    "id": 1,
+    "first_name": "Alex",
+    "last_name": "Martinez",
+    "email": "alex@sf.com",
+    "street": "415 Mission Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94105",
+    "lat": 37.78916,
+    "lng": -122.39521
+  }
+}
+```
 </details>
 
 ## Head and Tail Constructor

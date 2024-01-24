@@ -1,0 +1,58 @@
+{
+    "customer1": {
+      "id": 1,
+      "first_name": "Alex",
+      "last_name": "Martinez",
+      "email": "alex@sf.com",
+      "addresses": [
+          {
+              "street": "415 Mission Street",
+              "city": "San Francisco",
+              "state": "CA",
+              "postalCode": "94105",
+              "geo": {
+                  "lat": 37.78916,
+                  "lng": -122.39521
+              }
+          },
+          {
+              "street": "123",
+              "city": "San Francisco",
+              "state": "CA",
+              "postalCode": "94105",
+              "geo": {
+                  "lat": 37.78916,
+                  "lng": -122.39521
+              }
+          }
+      ]
+    },
+    "customer2": {
+      "id": 1,
+      "first_name": "Alex",
+      "last_name": "Martinez",
+      "email": "alex@sf.com",
+      "addresses": [
+          {
+              "street": "415 Mission Street",
+              "city": "San Francisco",
+              "state": "CA",
+              "postalCode": "94105",
+              "geo": {
+                  "lat": 37.78916,
+                  "lng": -122.39521
+              }
+          },
+          {
+              "street": "123",
+              "city": "San Francisco",
+              "state": "CA",
+              "postalCode": "94105",
+              "geo": {
+                  "lat": 37.78916,
+                  "lng": -122.39521
+              }
+          }
+      ]
+    }
+  }
