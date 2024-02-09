@@ -19,8 +19,6 @@ If you want to open an example in Visual Studio Code, you can use the **Export**
 - Article: [How to move your code from the DataWeave Playground to Visual Studio Code](https://www.prostdev.com/post/how-to-move-your-code-from-the-dataweave-playground-to-visual-studio-code)
 - Tutorial: [Getting started with the DataWeave extension for Visual Studio Code](https://developer.mulesoft.com/tutorials-and-howtos/dataweave/dataweave-extension-vscode-getting-started/)
 
-For additional questions, you can contact me here: [alexmartinez.ca/contact](https://www.alexmartinez.ca/contact)
-
 ## Table of Contents
 
 **Recursive Functions**
