@@ -25,6 +25,7 @@ For additional questions, you can contact me here: [alexmartinez.ca/contact](htt
 
 **Recursive Functions**
 - [getChildren](#getchildren)
+- [removeDynamodbKeys](#removedynamodbkeys)
 
 **Tail Recursive Functions**
 - [addIndexTailRecursive](#addindextailrecursive)
@@ -165,6 +166,427 @@ Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021
       }
     ]
   }
+  ```
+</details>
+
+### removeDynamodbKeys
+
+Removes the keys created by Amazon DynamoDB after performing a `scan` operation to retrieve the items from a table.
+
+You can set up which keys you want to remove using the `dynamodbKeys` variable. In this example, I added the keys `l, m, n, s, bool`.
+
+In the `dynamodbKeyUpdate` variable, I added the string `"unrepeatableKey"` because it will be used to replace the unwanted keys with this and then extract the value from it. If you have this key in your actual input, make sure to change it to something that doesn't exist within your payload.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FremoveDynamodbKeys"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+  ```json
+  {
+    "scannedCount": 1,
+    "lastEvaluatedKey": null,
+    "count": 1,
+    "consumedCapacity": null,
+    "items": [
+      {
+        "addresses": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": [
+            {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": {
+                "geo": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": {
+                    "lng": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "-122.39521",
+                      "bs": null,
+                      "s": null
+                    },
+                    "lat": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "37.78916",
+                      "bs": null,
+                      "s": null
+                    }
+                  },
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "country": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "United States"
+                },
+                "city": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "San Francisco"
+                },
+                "street": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "415 Mission Street"
+                },
+                "postalCode": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "94105"
+                },
+                "main": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": true,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "state": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "California"
+                }
+              },
+              "n": null,
+              "bs": null,
+              "s": null
+            },
+            {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": {
+                "geo": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": {
+                    "lng": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "-79.37756",
+                      "bs": null,
+                      "s": null
+                    },
+                    "lat": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "43.64184",
+                      "bs": null,
+                      "s": null
+                    }
+                  },
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "country": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Canada"
+                },
+                "city": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Toronto"
+                },
+                "street": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "10 Bay St."
+                },
+                "postalCode": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "M5J 2R8"
+                },
+                "main": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": false,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "state": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Ontario"
+                }
+              },
+              "n": null,
+              "bs": null,
+              "s": null
+            }
+          ],
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": null
+        },
+        "name": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": {
+            "firstName": {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": null,
+              "n": null,
+              "bs": null,
+              "s": "Alex"
+            },
+            "lastName": {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": null,
+              "n": null,
+              "bs": null,
+              "s": "Martinez"
+            }
+          },
+          "n": null,
+          "bs": null,
+          "s": null
+        },
+        "id": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": "1"
+        },
+        "email": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": "alex@sf.com"
+        }
+      }
+    ]
+  }
+  ```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output application/json 
+  import filterTree from dw::util::Tree
+  fun removeDynamodbKeys(data) = do {
+      var dynamodbKeys = ["l", "m", "n", "s", "bool"] // add the keys you want to remove
+      var dynamodbKeyUpdate = "unrepeatableKey" // change this name if this key is indeed repeated within your input
+      fun removeDynamodbKeysRec(value) = value match {
+          case obj is Object -> do {
+              var finalObj = obj mapObject ((value, key) -> 
+                  if (dynamodbKeys contains (key as String))
+                      (dynamodbKeyUpdate): removeDynamodbKeysRec(value)
+                  else
+                      (key): removeDynamodbKeysRec(value)
+              )
+              ---
+              finalObj[dynamodbKeyUpdate] default finalObj
+          }
+          case arr is Array -> arr map removeDynamodbKeysRec($)
+          else -> value
+      }
+      ---
+      data filterTree ($ != null) 
+      then removeDynamodbKeysRec($)
+  }
+  ---
+  removeDynamodbKeys(payload.items)
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  [
+    {
+      "addresses": [
+        {
+          "geo": {
+            "lng": "-122.39521",
+            "lat": "37.78916"
+          },
+          "country": "United States",
+          "city": "San Francisco",
+          "street": "415 Mission Street",
+          "postalCode": "94105",
+          "main": true,
+          "state": "California"
+        },
+        {
+          "geo": {
+            "lng": "-79.37756",
+            "lat": "43.64184"
+          },
+          "country": "Canada",
+          "city": "Toronto",
+          "street": "10 Bay St.",
+          "postalCode": "M5J 2R8",
+          "main": false,
+          "state": "Ontario"
+        }
+      ],
+      "name": {
+        "firstName": "Alex",
+        "lastName": "Martinez"
+      },
+      "id": "1",
+      "email": "alex@sf.com"
+    }
+  ]
   ```
 </details>
 

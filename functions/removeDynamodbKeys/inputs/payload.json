@@ -1,0 +1,328 @@
+{
+    "scannedCount": 1,
+    "lastEvaluatedKey": null,
+    "count": 1,
+    "consumedCapacity": null,
+    "items": [
+      {
+        "addresses": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": [
+            {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": {
+                "geo": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": {
+                    "lng": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "-122.39521",
+                      "bs": null,
+                      "s": null
+                    },
+                    "lat": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "37.78916",
+                      "bs": null,
+                      "s": null
+                    }
+                  },
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "country": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "United States"
+                },
+                "city": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "San Francisco"
+                },
+                "street": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "415 Mission Street"
+                },
+                "postalCode": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "94105"
+                },
+                "main": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": true,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "state": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "California"
+                }
+              },
+              "n": null,
+              "bs": null,
+              "s": null
+            },
+            {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": {
+                "geo": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": {
+                    "lng": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "-79.37756",
+                      "bs": null,
+                      "s": null
+                    },
+                    "lat": {
+                      "nullvalue": null,
+                      "ss": null,
+                      "b": null,
+                      "bool": null,
+                      "ns": null,
+                      "l": null,
+                      "m": null,
+                      "n": "43.64184",
+                      "bs": null,
+                      "s": null
+                    }
+                  },
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "country": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Canada"
+                },
+                "city": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Toronto"
+                },
+                "street": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "10 Bay St."
+                },
+                "postalCode": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "M5J 2R8"
+                },
+                "main": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": false,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": null
+                },
+                "state": {
+                  "nullvalue": null,
+                  "ss": null,
+                  "b": null,
+                  "bool": null,
+                  "ns": null,
+                  "l": null,
+                  "m": null,
+                  "n": null,
+                  "bs": null,
+                  "s": "Ontario"
+                }
+              },
+              "n": null,
+              "bs": null,
+              "s": null
+            }
+          ],
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": null
+        },
+        "name": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": {
+            "firstName": {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": null,
+              "n": null,
+              "bs": null,
+              "s": "Alex"
+            },
+            "lastName": {
+              "nullvalue": null,
+              "ss": null,
+              "b": null,
+              "bool": null,
+              "ns": null,
+              "l": null,
+              "m": null,
+              "n": null,
+              "bs": null,
+              "s": "Martinez"
+            }
+          },
+          "n": null,
+          "bs": null,
+          "s": null
+        },
+        "id": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": "1"
+        },
+        "email": {
+          "nullvalue": null,
+          "ss": null,
+          "b": null,
+          "bool": null,
+          "ns": null,
+          "l": null,
+          "m": null,
+          "n": null,
+          "bs": null,
+          "s": "alex@sf.com"
+        }
+      }
+    ]
+  }

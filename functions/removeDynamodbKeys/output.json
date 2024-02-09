@@ -1,0 +1,36 @@
+[
+    {
+      "addresses": [
+        {
+          "geo": {
+            "lng": "-122.39521",
+            "lat": "37.78916"
+          },
+          "country": "United States",
+          "city": "San Francisco",
+          "street": "415 Mission Street",
+          "postalCode": "94105",
+          "main": true,
+          "state": "California"
+        },
+        {
+          "geo": {
+            "lng": "-79.37756",
+            "lat": "43.64184"
+          },
+          "country": "Canada",
+          "city": "Toronto",
+          "street": "10 Bay St.",
+          "postalCode": "M5J 2R8",
+          "main": false,
+          "state": "Ontario"
+        }
+      ],
+      "name": {
+        "firstName": "Alex",
+        "lastName": "Martinez"
+      },
+      "id": "1",
+      "email": "alex@sf.com"
+    }
+  ]
