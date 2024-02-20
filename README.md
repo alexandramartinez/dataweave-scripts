@@ -22,7 +22,8 @@ If you want to open an example in Visual Studio Code, you can use the **Export**
 ## Table of Contents
 
 **Recursive Functions**
-- [getChildren](#getchildren)
+- [getChildren](#getchildren-v1-2021) (v1-2021)
+- [getChildren](#getchildren-v2-2024) (v2-2024)
 - [removeDynamodbKeys](#removedynamodbkeys)
 
 **Tail Recursive Functions**
@@ -58,7 +59,9 @@ To understand recursive functions better, take a look at this video: [What are r
 
 ### getChildren
 
-Creates a tree from a flat array with parent/child relationship.
+Creates a tree from a flat array with parent/child relationship. Please note there are two versions of this same functionality.
+
+#### getChildren v1 (2021)
 
 Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021 Day 9](https://youtu.be/ZRm1POYgwG0)
 
@@ -136,6 +139,104 @@ Video: [DataWeave Scripts Repo: getChildren recursive function | #Codetober 2021
       parent: parentItem.parent,
       name: parentItem.name,
       children: getChildren(items, parentItem)
+  }
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  {
+    "parent": "111",
+    "name": "node1",
+    "children": [
+      {
+        "name": "node2",
+        "children": [
+          {
+            "name": "node3"
+          },
+          {
+            "name": "node5"
+          }
+        ]
+      },
+      {
+        "name": "node4"
+      }
+    ]
+  }
+  ```
+</details>
+
+#### getChildren v2 (2024)
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FgetChildrenv2"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+  ```json
+  [
+      {
+          "parent": "111",
+          "child": "222",
+          "name": "node1",
+          "level": "1"
+      },
+      {
+          "parent": "222",
+          "child": "333",
+          "name": "node2",
+          "level": "2"
+      },
+      {
+          "parent": "333",
+          "child": "444",
+          "name": "node3",
+          "level": "3"
+      },
+      {
+          "parent": "222",
+          "child": "555",
+          "name": "node4",
+          "level": "2"
+      },
+      {
+          "parent": "333",
+          "child": "666",
+          "name": "node5",
+          "level": "3"
+      }
+  ]
+  ```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output application/json skipNullOn="everywhere"
+  var grouped = payload groupBy $.level
+  var parent = grouped["1"][0]
+  fun getChildren(data, level:Number, child:String) = do {
+      var c = data[level as String] filter ($.parent ~= child) map {
+          name: $.name,
+          children: getChildren(data, level+1, $.child)
+      }
+      ---
+      c match {
+          case ch if isEmpty(ch) -> null
+          else -> c
+      }
+  }
+  ---
+  {
+      parent: parent.parent,
+      name: parent.name,
+      children: getChildren(grouped, 2, parent.child)
   }
   ```
 </details>

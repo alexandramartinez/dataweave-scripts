@@ -1,0 +1,32 @@
+[
+    {
+        "parent": "111",
+        "child": "222",
+        "name": "node1",
+        "level": "1"
+    },
+    {
+        "parent": "222",
+        "child": "333",
+        "name": "node2",
+        "level": "2"
+    },
+    {
+        "parent": "333",
+        "child": "444",
+        "name": "node3",
+        "level": "3"
+    },
+    {
+        "parent": "222",
+        "child": "555",
+        "name": "node4",
+        "level": "2"
+    },
+    {
+        "parent": "333",
+        "child": "666",
+        "name": "node5",
+        "level": "3"
+    }
+]
