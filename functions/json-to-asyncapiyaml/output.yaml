@@ -1,0 +1,103 @@
+%YAML 1.2
+---
+payload:
+  type: object
+  properties:
+    eventId:
+      type: string
+      examples:
+        - 8f736b-d58e-4c8-ab5b-2b0c5ea26
+    replayId:
+      type: number
+      examples:
+        - 14094
+    event:
+      type: object
+      properties:
+        ChangeEventHeader:
+          type: object
+          properties:
+            entityName:
+              type: string
+              examples:
+                - AsyncAPI_User__c
+            recordIds:
+              type: array
+              items:
+                type: string
+                examples:
+                  - a00aj00000Oa3mMAAR
+            changeType:
+              type: string
+              examples:
+                - CREATE
+            changeOrigin:
+              type: string
+              examples:
+                - com/salesforce/api/soap/62.0;client=SfdcInternalAPI/
+            transactionKey:
+              type: string
+              examples:
+                - 0015f80-b56-30d6-7b4c-3e26a683e
+            sequenceNumber:
+              type: number
+              examples:
+                - 1
+            commitTimestamp:
+              type: number
+              examples:
+                - 1.73038659E+12
+            commitNumber:
+              type: number
+              examples:
+                - 1.7303865909031895E+18
+            commitUser:
+              type: string
+              examples:
+                - 00aj0008VWLA4
+            nulledFields:
+              type: array
+            diffFields:
+              type: array
+            changedFields:
+              type: array
+        OwnerId:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        Name:
+          type: string
+          examples:
+            - alex martinez
+        CreatedDate:
+          type: number
+          examples:
+            - 1.73038659E+12
+        CreatedById:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        LastModifiedDate:
+          type: number
+          examples:
+            - 1.73038659E+12
+        LastModifiedById:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        First_Name__c:
+          type: string
+          examples:
+            - alex
+        Last_Name__c:
+          type: string
+          examples:
+            - martinez
+        Email__c:
+          type: string
+          examples:
+            - alex@sf.com
+        Created_At__c:
+          type: number
+          examples:
+            - 1.730386573E+12

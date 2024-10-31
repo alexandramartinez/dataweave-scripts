@@ -50,6 +50,7 @@ If you want to open an example in Visual Studio Code, you can use the **Export**
 - [Clean XML for WordPress publishing](#clean-xml-for-wordpress-publishing)
 - [Clean HTML (text) for WordPress publishing](#clean-html-text-for-wordpress-publishing)
 - [YAML Objects to OpenAPI Schema](#yaml-objects-to-openapi-schema)
+- [JSON example to AsyncAPI YAML Schema](#json-example-to-asyncapi-yaml-schema)
 
 ## Recursive Functions
 
@@ -2302,6 +2303,206 @@ components:
           type: number
         type:
           type: string
+```
+
+</details>
+
+### JSON example to AsyncAPI YAML Schema
+
+Transforms a JSON example into a YAML schema to be used in an [AsyncAPI](https://www.asyncapi.com/) **2.6** specification.
+
+> [!NOTE]
+> There are some limitations to this code: 1) it assumes the first value is always an object and 2) doesn't dive too deep into the arrays structures, only for the first level. Problems will arise if there are `Array<Object>`, `Array<Array>` and so on.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2Fjson-to-asyncapiyaml"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+```json
+{
+  "eventId": "8f736b-d58e-4c8-ab5b-2b0c5ea26",
+  "replayId": 14094,
+  "event": {
+    "ChangeEventHeader": {
+      "entityName": "AsyncAPI_User__c",
+      "recordIds": [
+        "a00aj00000Oa3mMAAR"
+      ],
+      "changeType": "CREATE",
+      "changeOrigin": "com/salesforce/api/soap/62.0;client=SfdcInternalAPI/",
+      "transactionKey": "0015f80-b56-30d6-7b4c-3e26a683e",
+      "sequenceNumber": 1,
+      "commitTimestamp": 1.73038659E+12,
+      "commitNumber": 1.7303865909031895E+18,
+      "commitUser": "00aj0008VWLA4",
+      "nulledFields": [
+        
+      ],
+      "diffFields": [
+        
+      ],
+      "changedFields": [
+        
+      ]
+    },
+    "OwnerId": "00aj0008VWLA4",
+    "Name": "alex martinez",
+    "CreatedDate": 1.73038659E+12,
+    "CreatedById": "00aj0008VWLA4",
+    "LastModifiedDate": 1.73038659E+12,
+    "LastModifiedById": "00aj0008VWLA4",
+    "First_Name__c": "alex",
+    "Last_Name__c": "martinez",
+    "Email__c": "alex@sf.com",
+    "Created_At__c": 1.730386573E+12
+  }
+}
+```
+
+</details>
+
+<details>
+  <summary>Script</summary>
+
+```dataweave
+%dw 2.0
+output application/yaml skipNullOn="objects"
+fun getTypeField(data):Object = {"type": lower(typeOf(data) as String)}
+fun getValueStructure(data) = {
+    (getTypeField(data)),
+    examples: [data]
+}
+fun getArrayStructure(data:Array) = {
+    (getTypeField(data)),
+    items: (
+        if (!isEmpty(data[0])) getValueStructure(data[0])
+        else null
+    )
+}
+fun getObjectStructure(data:Object) = {
+    (getTypeField(data)),
+    properties: data mapObject ((value, key) -> {
+        (key): (value match {
+            case is Object -> getObjectStructure(value)
+            case is Array -> getArrayStructure(value)
+            else -> getValueStructure(value)
+        })
+    })
+}
+---
+payload: getObjectStructure(payload)
+```
+
+</details>
+
+<details>
+  <summary>Output</summary>
+
+```yaml
+%YAML 1.2
+---
+payload:
+  type: object
+  properties:
+    eventId:
+      type: string
+      examples:
+        - 8f736b-d58e-4c8-ab5b-2b0c5ea26
+    replayId:
+      type: number
+      examples:
+        - 14094
+    event:
+      type: object
+      properties:
+        ChangeEventHeader:
+          type: object
+          properties:
+            entityName:
+              type: string
+              examples:
+                - AsyncAPI_User__c
+            recordIds:
+              type: array
+              items:
+                type: string
+                examples:
+                  - a00aj00000Oa3mMAAR
+            changeType:
+              type: string
+              examples:
+                - CREATE
+            changeOrigin:
+              type: string
+              examples:
+                - com/salesforce/api/soap/62.0;client=SfdcInternalAPI/
+            transactionKey:
+              type: string
+              examples:
+                - 0015f80-b56-30d6-7b4c-3e26a683e
+            sequenceNumber:
+              type: number
+              examples:
+                - 1
+            commitTimestamp:
+              type: number
+              examples:
+                - 1.73038659E+12
+            commitNumber:
+              type: number
+              examples:
+                - 1.7303865909031895E+18
+            commitUser:
+              type: string
+              examples:
+                - 00aj0008VWLA4
+            nulledFields:
+              type: array
+            diffFields:
+              type: array
+            changedFields:
+              type: array
+        OwnerId:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        Name:
+          type: string
+          examples:
+            - alex martinez
+        CreatedDate:
+          type: number
+          examples:
+            - 1.73038659E+12
+        CreatedById:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        LastModifiedDate:
+          type: number
+          examples:
+            - 1.73038659E+12
+        LastModifiedById:
+          type: string
+          examples:
+            - 00aj0008VWLA4
+        First_Name__c:
+          type: string
+          examples:
+            - alex
+        Last_Name__c:
+          type: string
+          examples:
+            - martinez
+        Email__c:
+          type: string
+          examples:
+            - alex@sf.com
+        Created_At__c:
+          type: number
+          examples:
+            - 1.730386573E+12
 ```
 
 </details>

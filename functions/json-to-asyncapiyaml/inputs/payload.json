@@ -1,0 +1,38 @@
+{
+    "eventId": "8f736b-d58e-4c8-ab5b-2b0c5ea26",
+    "replayId": 14094,
+    "event": {
+      "ChangeEventHeader": {
+        "entityName": "AsyncAPI_User__c",
+        "recordIds": [
+          "a00aj00000Oa3mMAAR"
+        ],
+        "changeType": "CREATE",
+        "changeOrigin": "com/salesforce/api/soap/62.0;client=SfdcInternalAPI/",
+        "transactionKey": "0015f80-b56-30d6-7b4c-3e26a683e",
+        "sequenceNumber": 1,
+        "commitTimestamp": 1.73038659E+12,
+        "commitNumber": 1.7303865909031895E+18,
+        "commitUser": "00aj0008VWLA4",
+        "nulledFields": [
+          
+        ],
+        "diffFields": [
+          
+        ],
+        "changedFields": [
+          
+        ]
+      },
+      "OwnerId": "00aj0008VWLA4",
+      "Name": "alex martinez",
+      "CreatedDate": 1.73038659E+12,
+      "CreatedById": "00aj0008VWLA4",
+      "LastModifiedDate": 1.73038659E+12,
+      "LastModifiedById": "00aj0008VWLA4",
+      "First_Name__c": "alex",
+      "Last_Name__c": "martinez",
+      "Email__c": "alex@sf.com",
+      "Created_At__c": 1.730386573E+12
+    }
+  }
