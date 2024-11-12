@@ -9,6 +9,11 @@ In each function's section, you'll find a brief description of what it does, the
 > [!NOTE]
 > To learn more about this functionality, check out this video: [How to generate examples from GitHub to open in the DataWeave Playground](https://youtu.be/WzfFkgw0xhw).
 
+## Similar repos
+
+[![](https://github-readme-stats.vercel.app/api/pin/?username=alexandramartinez&repo=reviewing-a-complex-dw-transformation-use-case&theme=react)](https://github.com/alexandramartinez/reviewing-a-complex-dw-transformation-use-case)
+[![](https://github-readme-stats.vercel.app/api/pin/?username=alexandramartinez&repo=dataweave-challenges&theme=react)](https://github.com/alexandramartinez/dataweave-challenges)
+
 ## More Info
 
 To learn more about DataWeave, please go to DataWeave's official landing page: [dataweave.mulesoft.com](https://dataweave.mulesoft.com/). There you will find aditional resources like the link to join the official DataWeave Slack workspace, the DataWeave Playground, the Visual Studio Code extension, the documentation, and so on.
