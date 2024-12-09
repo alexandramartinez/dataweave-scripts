@@ -29,3 +29,5 @@ fun getObject(value: Any): Object | Null = (
 	if ( isObject(value) ) value as Object
 	else null
 )
+
+fun flatScan(a, b) = flatten(a scan b)
