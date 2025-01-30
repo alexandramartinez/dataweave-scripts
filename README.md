@@ -30,6 +30,7 @@ If you want to open an example in Visual Studio Code, you can use the **Export**
 - [getChildren](#getchildren-v1-2021) (v1-2021)
 - [getChildren](#getchildren-v2-2024) (v2-2024)
 - [removeDynamodbKeys](#removedynamodbkeys)
+- [flattenNestedArrays](#flattennestedarrays)
 
 **Tail Recursive Functions**
 - [addIndexTailRecursive](#addindextailrecursive)
@@ -691,6 +692,111 @@ In the `dynamodbKeyUpdate` variable, I added the string `"unrepeatableKey"` beca
       "id": "1",
       "email": "alex@sf.com"
     }
+  ]
+  ```
+</details>
+
+### flattenNestedArrays
+
+Navigates through a set of nested arrays to extract the values using `flatten` and `map`.
+
+Known limitations: does not extract nested objects.
+
+<a href="https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=alexandramartinez%2Fdataweave-scripts&path=functions%2FflattenNestedArrays"><img width="300" src="/images/dwplayground-button.png"><a>
+
+<details>
+  <summary>Input</summary>
+
+  ```json
+  [
+    1,
+    2,
+    [
+      3,
+      4,
+      [
+        [
+          [
+            [
+              5
+            ]
+          ]
+        ]
+      ],
+      [
+        [
+          6
+        ]
+      ],
+      [
+        [
+          [
+            [
+              7,
+              8,
+              9,
+              [
+                10,
+                11
+              ]
+            ]
+          ],
+          12,
+          [
+            13,
+            [
+              14,
+              [
+                15,
+                [
+                  16
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  ```
+</details>
+
+<details>
+  <summary>Script</summary>
+
+  ```dataweave
+  %dw 2.0
+  output application/json
+  fun flattenNestedArrays(data) = data match {
+      case is Array -> flatten(data map flattenNestedArrays($))
+      else -> data
+  }
+  ---
+  flattenNestedArrays(payload)
+  ```
+</details>
+
+<details>
+  <summary>Output</summary>
+
+  ```json
+  [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
   ]
   ```
 </details>
